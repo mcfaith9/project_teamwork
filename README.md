@@ -7,6 +7,39 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## About Filament
+
+The elegant TALLkit for Laravel artisans.
+[Filament](https://filamentphp.com/) is a collection of tools for rapidly building beautiful TALL stack apps, designed for humans.
+
+### Filament Plugins
+
+"3x1io/filament-user": "^1.1",
+"alperenersoy/filament-export": "^0.2.8",
+"barryvdh/laravel-dompdf": "^2.0",
+"bezhansalleh/filament-language-switch": "^1.0",
+"bezhansalleh/filament-shield": "^2.4",
+"buildix/timex": "^1.1",
+"discoverlance/filament-page-hints": "^1.0",
+"filament/filament": "^2.17",
+"filament/spatie-laravel-settings-plugin": "^2.17",
+"fruitcake/laravel-cors": "^2.0.5",
+"guzzlehttp/guzzle": "^7.2",
+"jeffgreco13/filament-breezy": "^1.5",
+"laravel/framework": "^9.0",
+"laravel/sanctum": "^2.14",
+"laravel/tinker": "^2.7",
+"livewire/livewire": "^2.12",
+"marjose123/filament-lockscreen": "^1.1",
+"pxlrbt/filament-environment-indicator": "^1.0",
+"pxlrbt/filament-spotlight": "^0.3.6",
+"shuvroroy/filament-spatie-laravel-backup": "^1.2",
+"shuvroroy/filament-spatie-laravel-health": "^1.6",
+"spatie/laravel-health": "^1.22",
+"spatie/simple-excel": "^3.2",
+"stafe-group-ab/filament-bookmarks-menu": "^1.0"
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
