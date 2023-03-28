@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0",
         "3x1io/filament-user": "^1.1",
+        "alexjustesen/filament-spatie-laravel-activitylog": "^0.6.3",
         "alperenersoy/filament-export": "^0.2.8",
         "barryvdh/laravel-dompdf": "^2.0",
         "bezhansalleh/filament-language-switch": "^1.0",
@@ -27,6 +28,7 @@
         "pxlrbt/filament-spotlight": "^0.3.6",
         "shuvroroy/filament-spatie-laravel-backup": "^1.2",
         "shuvroroy/filament-spatie-laravel-health": "^1.6",
+        "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-health": "^1.22",
         "spatie/simple-excel": "^3.2",
         "stafe-group-ab/filament-bookmarks-menu": "^1.0"

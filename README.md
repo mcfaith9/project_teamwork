@@ -1,7 +1,6 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
@@ -14,7 +13,7 @@ The elegant TALLkit for Laravel artisans.
 
 ### Filament Plugins
 
-    > "3x1io/filament-user": "^1.1",
+    >"3x1io/filament-user": "^1.1",
     >"alperenersoy/filament-export": "^0.2.8",
     >"barryvdh/laravel-dompdf": "^2.0",
     >"bezhansalleh/filament-language-switch": "^1.0",

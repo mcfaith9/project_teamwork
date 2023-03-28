@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26f6f8e39e3cc6df5d088a74112b9f4e",
+    "content-hash": "0bafe9603d687a213b69bd14eed64d60",
     "packages": [
         {
             "name": "3x1io/filament-user",
@@ -142,6 +142,86 @@
                 "source": "https://github.com/akaunting/laravel-money/tree/4.0.1"
             },
             "time": "2023-03-16T14:39:27+00:00"
+        },
+        {
+            "name": "alexjustesen/filament-spatie-laravel-activitylog",
+            "version": "v0.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alexjustesen/filament-spatie-laravel-activitylog.git",
+                "reference": "204982874e3a0c0168c69805b448873b2aed8ceb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alexjustesen/filament-spatie-laravel-activitylog/zipball/204982874e3a0c0168c69805b448873b2aed8ceb",
+                "reference": "204982874e3a0c0168c69805b448873b2aed8ceb",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.7",
+                "illuminate/contracts": "^8.0 || ^9.0 || ^10.0",
+                "php": "^8.0 || ^8.1 || ^8.2",
+                "spatie/laravel-activitylog": "^4.3",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.10 || ^6.0",
+                "nunomaduro/larastan": "^1.0 || ^2.0.1",
+                "orchestra/testbench": "^6.22 || ^7.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AlexJustesen\\FilamentSpatieLaravelActivitylog\\FilamentSpatieLaravelActivitylogServiceProvider"
+                    ],
+                    "aliases": {
+                        "FilamentSpatieLaravelActivitylog": "AlexJustesen\\FilamentSpatieLaravelActivitylog\\Facades\\FilamentSpatieLaravelActivitylog"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AlexJustesen\\FilamentSpatieLaravelActivitylog\\": "src",
+                    "AlexJustesen\\FilamentSpatieLaravelActivitylog\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Justesen",
+                    "email": "support@alexjustesen.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "View your activity logs inside of Filament.",
+            "homepage": "https://github.com/alexjustesen/filament-spatie-laravel-activitylog",
+            "keywords": [
+                "alexjustesen",
+                "filament-spatie-laravel-activitylog",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/alexjustesen/filament-spatie-laravel-activitylog/issues",
+                "source": "https://github.com/alexjustesen/filament-spatie-laravel-activitylog/tree/v0.6.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/alexjustesen",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-03-02T15:27:09+00:00"
         },
         {
             "name": "alperenersoy/filament-export",
@@ -6482,6 +6562,97 @@
                 }
             ],
             "time": "2022-07-05T09:31:00+00:00"
+        },
+        {
+            "name": "spatie/laravel-activitylog",
+            "version": "4.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-activitylog.git",
+                "reference": "ec65a478a909b8df1b4f0c3c45de2592ca7639e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/ec65a478a909b8df1b4f0c3c45de2592ca7639e5",
+                "reference": "ec65a478a909b8df1b4f0c3c45de2592ca7639e5",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "^8.0 || ^9.0 || ^10.0",
+                "illuminate/database": "^8.69 || ^9.27 || ^10.0",
+                "illuminate/support": "^8.0 || ^9.0 || ^10.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.6.3"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "orchestra/testbench": "^6.23 || ^7.0 || ^8.0",
+                "pestphp/pest": "^1.20"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Activitylog\\ActivitylogServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Activitylog\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tom Witkowski",
+                    "email": "dev.gummibeer@gmail.com",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A very simple activity logger to monitor the users of your website or application",
+            "homepage": "https://github.com/spatie/activitylog",
+            "keywords": [
+                "activity",
+                "laravel",
+                "log",
+                "spatie",
+                "user"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-activitylog/issues",
+                "source": "https://github.com/spatie/laravel-activitylog/tree/4.7.3"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-25T17:04:51+00:00"
         },
         {
             "name": "spatie/laravel-backup",

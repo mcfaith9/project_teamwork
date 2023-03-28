@@ -7,6 +7,7 @@ use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use ShuvroRoy\FilamentSpatieLaravelHealth\Pages\HealthCheckResults;
 use Spatie\Health\Checks\Checks\DebugModeCheck;
@@ -43,17 +44,21 @@ class FilamentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->configureAdminMenu();
+        $this->customAdminMenu();
         $this->configureHealthCheck();
 
         Filament::registerRenderHook(
             'global-search.start',
             fn (): View => view('components/topbar-navigation-list'),
         );  
+        // Filament::registerRenderHook(
+        //     'global-search.end',
+        //     fn (): string => Blade::render('Ctrl + / to search'),
+        // );
     }
 
 
-    private function configureAdminMenu()
+    private function customAdminMenu()
     {
         Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
             return $builder->item(
