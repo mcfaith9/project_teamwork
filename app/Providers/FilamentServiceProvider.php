@@ -83,7 +83,7 @@ class FilamentServiceProvider extends ServiceProvider
 
                     NavigationGroup::make('Tools')
                         ->items([
-                            NavigationItem::make(\Carbon\Carbon::today()->isoFormat('dddd, D MMM'))
+                            NavigationItem::make('Calendar | ' . \Carbon\Carbon::today()->isoFormat('dddd, D MMM'))
                                 ->url('/admin/timex')
                                 ->icon('timex-timex')
                                 ->sort(1),

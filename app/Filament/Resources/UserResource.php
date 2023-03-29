@@ -15,6 +15,8 @@ use Filament\Tables\Columns\BooleanColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use STS\FilamentImpersonate\Impersonate;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class UserResource extends Resource
 {
@@ -100,6 +102,15 @@ class UserResource extends Resource
                 Tables\Filters\Filter::make('unverified')
                     ->label(trans('filament-user::user.resource.unverified'))
                     ->query(fn (Builder $query): Builder => $query->whereNull('email_verified_at')),
+            ])
+            ->bulkActions([
+                FilamentExportBulkAction::make('export')
+            ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('Export'),
+                // FilamentExportHeaderAction::make('Export')->defaultFormat('pdf')->label('Export PDF'),
+                // FilamentExportHeaderAction::make('Export')->defaultFormat('xlsx')->label('Export Excel'),
+                // FilamentExportHeaderAction::make('Export')->defaultFormat('csv')->label('Export CSV')
             ]);
 
         if(config('filament-user.impersonate')){
