@@ -27,6 +27,7 @@
         "phpsa/filament-feed": "^1.0",
         "pxlrbt/filament-environment-indicator": "^1.0",
         "pxlrbt/filament-spotlight": "^0.3.6",
+        "ryangjchandler/blade-tabler-icons": "*",
         "shuvroroy/filament-spatie-laravel-backup": "^1.2",
         "shuvroroy/filament-spatie-laravel-health": "^1.6",
         "spatie/laravel-activitylog": "^4.7",

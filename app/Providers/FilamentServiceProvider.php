@@ -51,22 +51,25 @@ class FilamentServiceProvider extends ServiceProvider
             'global-search.start',
             fn (): View => view('components/topbar-navigation-list'),
         );  
-        // Filament::registerRenderHook(
-        //     'global-search.end',
-        //     fn (): string => Blade::render('Ctrl + / to search'),
-        // );
     }
 
 
     private function customAdminMenu()
     {
         Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
-            return $builder->item(
-                NavigationItem::make('Dashboard')
-                    ->url(route('filament.pages.dashboard'))
-                    ->label('Dashboard')
-                    ->icon('heroicon-o-home'))
+            return $builder                               
                 ->groups([
+
+                    NavigationGroup::make(null)
+                        ->items([
+                            NavigationItem::make('Dashboard')
+                                ->url(route('filament.pages.dashboard'))
+                                ->icon('tabler-chart-treemap'),
+                            NavigationItem::make('Timer')
+                                ->url('#')
+                                ->icon('tabler-clock-hour-3')
+                                ->sort(2)
+                        ]),
 
                     NavigationGroup::make('Authentication')
                         ->items([
@@ -98,6 +101,38 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->sort(3)
                         ]),
 
+                    NavigationGroup::make('Timedoctor')
+                        ->items([
+
+                            NavigationGroup::make('Timer')
+                                ->items([
+                                        NavigationItem::make('TD')
+                                            ->url('#')
+                                            ->icon('tabler-list-details')
+                                            ->sort(1),
+                                        NavigationItem::make('Teamwork')
+                                            ->url('#')
+                                            ->icon('tabler-list-details')
+                                            ->sort(2),
+                                    ]),
+                            NavigationItem::make('Time Dashboard')
+                                ->url('#')
+                                ->icon('heroicon-o-chart-pie')
+                                ->sort(2),
+                            NavigationItem::make('Edit Time')
+                                ->url('#')
+                                ->icon('tabler-clock-edit')
+                                ->sort(3),
+                            NavigationItem::make('Report')
+                                ->url('#')
+                                ->icon('tabler-report')
+                                ->sort(4),
+                            NavigationItem::make('Help')
+                                ->url('#')
+                                ->icon('heroicon-o-question-mark-circle')
+                                ->sort(5),
+                        ]),
+
                     NavigationGroup::make('System')
                         ->items([
 
@@ -108,7 +143,7 @@ class FilamentServiceProvider extends ServiceProvider
 
                             NavigationItem::make('Backups')
                                 ->url('/admin/backups')
-                                ->icon('heroicon-o-cog')
+                                ->icon('tabler-brand-google-drive')
                                 ->sort(2),
                         ]),                    
                 ]);

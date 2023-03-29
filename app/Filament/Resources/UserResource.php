@@ -107,10 +107,9 @@ class UserResource extends Resource
                 FilamentExportBulkAction::make('export')
             ])
             ->headerActions([
-                FilamentExportHeaderAction::make('Export'),
-                // FilamentExportHeaderAction::make('Export')->defaultFormat('pdf')->label('Export PDF'),
-                // FilamentExportHeaderAction::make('Export')->defaultFormat('xlsx')->label('Export Excel'),
-                // FilamentExportHeaderAction::make('Export')->defaultFormat('csv')->label('Export CSV')
+                FilamentExportHeaderAction::make('ExportPDF')->defaultFormat('pdf')->label('Export PDF'),
+                FilamentExportHeaderAction::make('ExportXLSX')->defaultFormat('xlsx')->label('Export Excel'),
+                FilamentExportHeaderAction::make('ExportCSV')->defaultFormat('csv')->label('Export CSV')
             ]);
 
         if(config('filament-user.impersonate')){

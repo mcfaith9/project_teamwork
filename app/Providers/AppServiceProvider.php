@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Filament\Facades\Filament;
 use Filament\Navigation\UserMenuItem;
+use pxlrbt\FilamentEnvironmentIndicator\FilamentEnvironmentIndicator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,9 +35,9 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        // FilamentEnvironmentIndicator::configureUsing(function (FilamentEnvironmentIndicator $indicator) {
-        //     $indicator->showBadge = fn () => false;
-        //     $indicator->showBorder = fn () => true;
-        // }, isImportant: true);
+        FilamentEnvironmentIndicator::configureUsing(function (FilamentEnvironmentIndicator $indicator) {
+            $indicator->showBadge = fn () => true;
+            $indicator->showBorder = fn () => true;
+        }, isImportant: true);
     }
 }
