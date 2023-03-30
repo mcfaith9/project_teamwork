@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "913392676456c19002d723e1390e9ca7",
+    "content-hash": "4b908abaef6ce2449a86fa5758cec59d",
     "packages": [
         {
             "name": "3x1io/filament-user",
@@ -334,6 +334,81 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
+        },
+        {
+            "name": "awcodes/filament-badgeable-column",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awcodes/filament-badgeable-column.git",
+                "reference": "79e5142f493e4978fc612f6653bbe297d10a7c9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awcodes/filament-badgeable-column/zipball/79e5142f493e4978fc612f6653bbe297d10a7c9c",
+                "reference": "79e5142f493e4978fc612f6653bbe297d10a7c9c",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.0",
+                "illuminate/contracts": "^9.0|^10.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.13.5"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^6.0|^7.0",
+                "orchestra/testbench": "^7.0|^8.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "pestphp/pest-plugin-livewire": "^1.0",
+                "pestphp/pest-plugin-parallel": "^0.3",
+                "phpunit/phpunit": "^9.5|^10.0",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Awcodes\\FilamentBadgeableColumn\\BadgeableColumnServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Awcodes\\FilamentBadgeableColumn\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "awcodes",
+                    "email": "awcodes1@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Filament Tables column with appendable badges.",
+            "homepage": "https://github.com/awcodes/filament-badgeable-column",
+            "keywords": [
+                "awcodes",
+                "filament",
+                "filament-badgeable-column",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/awcodes/filament-badgeable-column/issues",
+                "source": "https://github.com/awcodes/filament-badgeable-column/tree/v1.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/awcodes",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-03-10T14:21:40+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",

@@ -9,6 +9,7 @@
         "3x1io/filament-user": "^1.1",
         "alexjustesen/filament-spatie-laravel-activitylog": "^0.6.3",
         "alperenersoy/filament-export": "^0.2.8",
+        "awcodes/filament-badgeable-column": "^1.2",
         "barryvdh/laravel-dompdf": "^2.0",
         "bezhansalleh/filament-language-switch": "^1.0",
         "bezhansalleh/filament-shield": "^2.4",

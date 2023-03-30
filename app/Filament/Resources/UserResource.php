@@ -17,6 +17,9 @@ use App\Filament\Resources\UserResource\Pages;
 use STS\FilamentImpersonate\Impersonate;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
+use Awcodes\FilamentBadgeableColumn\Components\Badge;
+use Awcodes\FilamentBadgeableColumn\Components\BadgeField;
+use Awcodes\FilamentBadgeableColumn\Components\BadgeableColumn;
 
 class UserResource extends Resource
 {
@@ -88,12 +91,21 @@ class UserResource extends Resource
                 TextColumn::make('name')->sortable()->searchable()->label(trans('filament-user::user.resource.name')),
                 TextColumn::make('email')->sortable()->searchable()->label(trans('filament-user::user.resource.email')),
                 BooleanColumn::make('email_verified_at')->sortable()->searchable()->label(trans('filament-user::user.resource.email_verified_at')),
-                Tables\Columns\TextColumn::make('created_at')->label(trans('filament-user::user.resource.created_at'))
-                    ->dateTime('M j, Y')->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')->label(trans('filament-user::user.resource.updated_at'))
-                    ->dateTime('M j, Y')->sortable(),
-                TextColumn::make('roles.name')->sortable()->searchable()->label(trans('Roles'))
-
+                // Tables\Columns\TextColumn::make('created_at')->label(trans('filament-user::user.resource.created_at'))
+                //     ->dateTime('M j, Y')->sortable(),
+                // Tables\Columns\TextColumn::make('updated_at')->label(trans('filament-user::user.resource.updated_at'))
+                //     ->dateTime('M j, Y')->sortable(),
+                BadgeableColumn::make('roles.name')
+                    ->badges([
+                        Badge::make('employee_badge')
+                            ->label('Super Admin')
+                            ->color('success')
+                            ->visible(fn ($record): bool => $record->roles[0]['name'] == 'super_admin'),
+                        Badge::make('admin_badge')
+                            ->label('Admin')
+                            ->color('success')
+                            ->visible(fn ($record): bool => $record->roles[0]['name'] == 'user'),
+                    ])->sortable()->searchable()->label(trans('Roles'))
             ])
             ->filters([
                 Tables\Filters\Filter::make('verified')
@@ -107,9 +119,9 @@ class UserResource extends Resource
                 FilamentExportBulkAction::make('export')
             ])
             ->headerActions([
-                FilamentExportHeaderAction::make('ExportPDF')->defaultFormat('pdf')->label('Export PDF'),
-                FilamentExportHeaderAction::make('ExportXLSX')->defaultFormat('xlsx')->label('Export Excel'),
-                FilamentExportHeaderAction::make('ExportCSV')->defaultFormat('csv')->label('Export CSV')
+                FilamentExportHeaderAction::make('ExportPDF')->defaultFormat('pdf')->label('Export PDF')->button()->color('success'),
+                FilamentExportHeaderAction::make('ExportXLSX')->defaultFormat('xlsx')->label('Export Excel')->button()->color('success'),
+                FilamentExportHeaderAction::make('ExportCSV')->defaultFormat('csv')->label('Export CSV')->button()->color('success')
             ]);
 
         if(config('filament-user.impersonate')){
