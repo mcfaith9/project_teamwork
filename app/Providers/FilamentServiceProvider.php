@@ -66,7 +66,7 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->url(route('filament.pages.dashboard'))
                                 ->icon('tabler-chart-treemap'),
                             NavigationItem::make('Timer')
-                                ->url('#')
+                                ->url('/admin/users/timer')
                                 ->icon('tabler-clock-hour-3')
                                 ->sort(2)
                         ]),

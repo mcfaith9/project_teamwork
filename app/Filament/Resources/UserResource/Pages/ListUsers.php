@@ -15,13 +15,4 @@ class ListUsers extends ListRecords
     {
         return trans('filament-user::user.resource.title.list');
     }
-
-    // protected function getTableHeaderActions(): array
-    // {
-    //     return [
-    //         FilamentExportHeaderAction::make('Export')->defaultFormat('pdf')->label('Export PDF'),
-    //         FilamentExportHeaderAction::make('Export')->defaultFormat('xlsx')->label('Export Excel'),
-    //         FilamentExportHeaderAction::make('Export')->defaultFormat('csv')->label('Export CSV')
-    //     ];
-    // }
 }

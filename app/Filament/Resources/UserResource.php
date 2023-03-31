@@ -142,6 +142,7 @@ class UserResource extends Resource
             'mywork' => Pages\MyWork::route('/mywork'),
             'myprojects' => Pages\MyProjects::route('/myprojects'),
             'inbox' => Pages\Inbox::route('/inbox'),
+            'timer' => Pages\Timer::route('/timer'),
         ];
     }    
 }
