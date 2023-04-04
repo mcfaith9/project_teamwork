@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		<div class="text-right">
-			<p id="totalWorkedToday" class="text-black-500 dark:text-white mr-2">Total Worked Today: 00:00:00</p>
+			<p class="text-black-500 dark:text-white mr-2">Total Worked Today: <b id="totalWorkedToday">00:00:00</b></p>
 		</div>		
 	</div>
 
@@ -21,11 +21,13 @@
     	        </div>
     	        <div class="flex-1">
     	            <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $item['title'] }}</h4>
-    	            <p class="text-gray-500 dark:text-white">{{ $item['description'] }}</p>
+    	            <p class="text-gray-500 dark:text-white pr-1">{{ $item['description'] }}</p>
     	        </div>
     	        <div class="flex items-center">
     	            <div wire:ignore>
-    	                <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $item['id'] }}">00:00:00</p>
+    	                @if(isset($item['previous_time']))
+	                        <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $item['id'] }}">{{ $item['previous_time'] }}</p>
+	                    @endif
     	            </div>
     	            <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" data-id="{{ $item['id'] }}" id="timerBtn_{{ $item['id'] }}">
     	                <x-heroicon-o-play class="h-7 w-7 dark:text-white" />
@@ -88,8 +90,11 @@
 						}
 						if (!timer || timer.paused) {
 
-			        		// Start the timer
-							const start = timer && timer.elapsed ? new Date().getTime() - timer.elapsed : new Date().getTime();
+			        		// Get previous time in milliseconds and add it to the start time
+    		                const previousTime = button.closest('li').querySelector('#timer' + id)?.textContent.trim();
+    		                const previousTimeInMs = previousTime ? previousTime.split(':').reduce((acc, time) => (60 * acc) + +time, 0) * 1000 : 0;
+    		                const start = timer && timer.elapsed ? new Date().getTime() - timer.elapsed : new Date().getTime() - previousTimeInMs;
+    		                
 							timers[id] = {
 								id: id,
 								startTime: start,
@@ -105,7 +110,7 @@
 									elapsedTimes[id] = distance;
 									const totalElapsed = Object.values(elapsedTimes).reduce((acc, val) => acc + val, 0);
 									const totalElapsedEl = document.querySelector('#totalWorkedToday');
-									totalElapsedEl.innerHTML = `Total Worked Today: ${Math.floor(totalElapsed / (1000 * 60 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60)) / 1000).toString().padStart(2, '0')}`;
+									totalElapsedEl.innerHTML = `${Math.floor(totalElapsed / (1000 * 60 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60)) / 1000).toString().padStart(2, '0')}`;
 								}, 1000),
 								paused: false,
 								elapsed: timer ? timer.elapsed : 0
