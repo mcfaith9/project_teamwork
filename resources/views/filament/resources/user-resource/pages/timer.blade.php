@@ -12,59 +12,29 @@
 			<p class="text-black-500 dark:text-white mr-2">Total Worked Today: 00:00:00</p>
 		</div>		
 	</div>
+
     <ul id="task-list-item" class="bg-white border border-gray-200 divide-y divide-gray-200 dark:bg-gray-800 dark:border-gray-700">
-        <li class="py-4 px-4 flex dark:hover:bg-gray-500/10">
-            <div class="flex items-center mr-4">
-                <x-tabler-drag-drop-2 class="h-5 w-5 text-gray-400 cursor-move" style="cursor: grab!important" />
-            </div>
-            <div class="flex-1">
-                <h4 class="text-lg font-medium text-gray-900 dark:text-white">Upskill Fimalament</h4>
-                <p class="text-gray-500 dark:text-white">Boosting my skills with Filament's comprehensive learning resources.</p>
-            </div>
-            <div class="flex items-center">
-                <div wire:ignore>
-                    <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer">00:00:00</p>
-                </div>
-                <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" id="timerBtn">
-                   <x-heroicon-o-play class="clock-play h-7 w-7 dark:text-white" />
-                </button>
-            </div>
-        </li>
-        <li class="py-4 px-4 flex dark:hover:bg-gray-500/10">
-            <div class="flex items-center mr-4">
-                <x-tabler-drag-drop-2 class="h-5 w-5 text-gray-400 cursor-move" style="cursor: grab!important" />
-            </div>
-            <div class="flex-1">
-                <h4 class="text-lg font-medium text-gray-900 dark:text-white">List Item 2</h4>
-                <p class="text-gray-500 dark:text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-            <div class="flex items-center">
-                <div wire:ignore>
-                    <p class="font-medium text-gray-500 dark:text-white mr-2">00:00:00</p>
-                </div>
-                <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900">
-                    <x-heroicon-o-play class="clock-play h-7 w-7 dark:text-white" />
-                </button>
-            </div>
-        </li>
-        <li class="py-4 px-4 flex dark:hover:bg-gray-500/10">
-            <div class="flex items-center mr-4">
-                <x-tabler-drag-drop-2 class="h-5 w-5 text-gray-400 cursor-move" style="cursor: grab!important" />
-            </div>
-            <div class="flex-1">
-                <h4 class="text-lg font-medium text-gray-900 dark:text-white">List Item 3</h4>
-                <p class="text-gray-500 dark:text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-            <div class="flex items-center">
-                <div wire:ignore>
-                    <p class="font-medium text-gray-500 dark:text-white mr-2">00:00:00</p>
-                </div>
-                <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900">
-                    <x-heroicon-o-play class="h-7 w-7 dark:text-white" />
-                </button>
-            </div>
-        </li>
+    	@foreach ($items as $item)
+    	    <li class="py-4 px-4 flex dark:hover:bg-gray-500/10">
+    	        <div class="flex items-center mr-4">
+    	            <x-tabler-drag-drop-2 class="h-5 w-5 text-gray-400 cursor-move" style="cursor: grab!important" />
+    	        </div>
+    	        <div class="flex-1">
+    	            <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $item['title'] }}</h4>
+    	            <p class="text-gray-500 dark:text-white">{{ $item['description'] }}</p>
+    	        </div>
+    	        <div class="flex items-center">
+    	            <div wire:ignore>
+    	                <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $item['id'] }}">00:00:00</p>
+    	            </div>
+    	            <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" data-id="{{ $item['id'] }}" id="timerBtn_{{ $item['id'] }}">
+    	                <x-heroicon-o-play class="h-7 w-7 dark:text-white" />
+    	            </button>
+    	        </div>
+    	    </li>
+    	@endforeach
     </ul>
+
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
     <script>
         document.addEventListener('livewire:load', function () {
@@ -97,53 +67,58 @@
 				});
 			});
 
-	        var seconds = 0;
-	        var minutes = 0;
-	        var hours = 0;
-	        var timerInterval;
-	        var timerBtn = document.getElementById("timerBtn");
-	        var startTime = 0;
-	        var pauseTime = 0;
-	        var totalElapsedTime = 0;
+			document.addEventListener("DOMContentLoaded", function() {
+			    let timers = {};
 
-	        function startTimer() {
-	          	startTime = Date.now() - totalElapsedTime;
-	          	timerInterval = setInterval(function() {
-		            var currentTime = Date.now();
-		            totalElapsedTime = currentTime - startTime;
-		            seconds = Math.floor((totalElapsedTime / 1000) % 60);
-		            minutes = Math.floor((totalElapsedTime / (1000 * 60)) % 60);
-		            hours = Math.floor((totalElapsedTime / (1000 * 60 * 60)) % 24);
+			    // Listen for clicks on timer buttons
+			    document.querySelectorAll('[id^="timerBtn_"]').forEach(button => {
+			      	button.addEventListener('click', function() {
+				        const id = button.getAttribute('data-id');
+				        let timer = timers[id];
 
-		            var timer = document.getElementById("timer");
-					timer.innerHTML =
-					hours.toString().padStart(2, "0") +
-					":" +
-					minutes.toString().padStart(2, "0") +
-					":" +
-					seconds.toString().padStart(2, "0");
-	          }, 1000);
-	          timerBtn.innerHTML = `<x-heroicon-o-pause class="pause h-7 w-7 dark:text-white" />`;
-	        }
+			        // If another timer is already running, pause it
+			        	const runningTimer = Object.values(timers).find(t => t && !t.paused && t.timerId !== timer?.timerId);
+				        if (runningTimer) {
+				          	clearInterval(runningTimer.timerId);
+				          	runningTimer.elapsed = new Date().getTime() - runningTimer.startTime;
+				          	runningTimer.paused = true;
+				          	document.querySelector(`#timerBtn_${runningTimer.id}`).innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />	`;
+				        }
 
-	        function pauseTimer() {
-	            clearInterval(timerInterval);
-	            timerBtn.innerHTML = `<x-heroicon-o-play class="play h-7 w-7 dark:text-white" />`;
-	            pauseTime = Date.now();
-	            totalElapsedTime = pauseTime - startTime;
+			        	if (!timer || timer.paused) {
+				          // Start the timer
+				          	const start = timer && timer.elapsed ? new Date().getTime() - timer.elapsed : new Date().getTime();
+				          	timers[id] = {
+					            id: id,
+					            startTime: start,
+					            timerId: setInterval(function() {
+					              	const now = new Date().getTime();
+					              	const distance = now - start;
 
-	            console.log("Elapsed time: " + (totalElapsedTime / 1000) + " seconds");
-	        }
+					              	const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					              	const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					              	const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-	        timerBtn.addEventListener("click", function() {
-				if (!timerInterval) {
-					startTimer();
-				} else if (timerBtn.innerHTML.includes("pause")) {
-					pauseTimer();
-				} else if (timerBtn.innerHTML.includes("play")) {
-					startTimer();
-				}
-	        });
-        })
+					              	const timerEl = document.querySelector(`#timer${id}`);
+					              	timerEl.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+				            }, 1000),
+				            paused: false,
+				            elapsed: timer ? timer.elapsed : 0
+				          };
+				          	button.innerHTML = `<x-heroicon-o-pause class="h-7 w-7 dark:text-white" />`;
+
+				        } else {
+				          	// Pause the timer
+				          	clearInterval(timer.timerId);
+				          	timer.elapsed = new Date().getTime() - timer.startTime;
+				          	timer.paused = true;
+
+				          	button.innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />	`;
+				        }
+			      	});
+			    });
+			});     
+
+        });
     </script>
 </x-filament::page>
