@@ -105,7 +105,7 @@
 									elapsedTimes[id] = distance;
 									const totalElapsed = Object.values(elapsedTimes).reduce((acc, val) => acc + val, 0);
 									const totalElapsedEl = document.querySelector('#totalWorkedToday');
-									totalElapsedEl.innerHTML = `Total elapsed time: ${Math.floor(totalElapsed / (1000 * 60 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60)) / 1000).toString().padStart(2, '0')}`;
+									totalElapsedEl.innerHTML = `Total Worked Today: ${Math.floor(totalElapsed / (1000 * 60 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60)) / 1000).toString().padStart(2, '0')}`;
 								}, 1000),
 								paused: false,
 								elapsed: timer ? timer.elapsed : 0
@@ -118,6 +118,7 @@
 							clearInterval(timer.timerId);
 							timer.elapsed = new Date().getTime() - timer.startTime;
 							timer.paused = true;
+							button.innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />`;
 
 			        		// Update elapsed time
 							elapsedTimes[id] = timer.elapsed;
