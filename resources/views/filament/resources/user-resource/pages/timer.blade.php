@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		<div class="text-right">
-			<p class="text-black-500 dark:text-white mr-2">Total Worked Today: 00:00:00</p>
+			<p id="totalWorkedToday" class="text-black-500 dark:text-white mr-2">Total Worked Today: 00:00:00</p>
 		</div>		
 	</div>
 
@@ -68,57 +68,68 @@
 			});
 
 			document.addEventListener("DOMContentLoaded", function() {
-			    let timers = {};
+				let timers = {};
+				let elapsedTimes = {};
 
-			    // Listen for clicks on timer buttons
-			    document.querySelectorAll('[id^="timerBtn_"]').forEach(button => {
-			      	button.addEventListener('click', function() {
-				        const id = button.getAttribute('data-id');
-				        let timer = timers[id];
+			  	// Listen for clicks on timer buttons
+				document.querySelectorAll('[id^="timerBtn_"]').forEach(button => {
+					button.addEventListener('click', function() {
 
-			        // If another timer is already running, pause it
-			        	const runningTimer = Object.values(timers).find(t => t && !t.paused && t.timerId !== timer?.timerId);
-				        if (runningTimer) {
-				          	clearInterval(runningTimer.timerId);
-				          	runningTimer.elapsed = new Date().getTime() - runningTimer.startTime;
-				          	runningTimer.paused = true;
-				          	document.querySelector(`#timerBtn_${runningTimer.id}`).innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />	`;
-				        }
+						const id = button.getAttribute('data-id');
+						let timer = timers[id];
 
-			        	if (!timer || timer.paused) {
-				          // Start the timer
-				          	const start = timer && timer.elapsed ? new Date().getTime() - timer.elapsed : new Date().getTime();
-				          	timers[id] = {
-					            id: id,
-					            startTime: start,
-					            timerId: setInterval(function() {
-					              	const now = new Date().getTime();
-					              	const distance = now - start;
+			      		// If another timer is already running, pause it
+						const runningTimer = Object.values(timers).find(t => t && !t.paused && t.timerId !== timer?.timerId);
+						if (runningTimer) {
+							clearInterval(runningTimer.timerId);
+							runningTimer.elapsed = new Date().getTime() - runningTimer.startTime;
+							runningTimer.paused = true;
+							document.querySelector(`#timerBtn_${runningTimer.id}`).innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />  `;
+						}
+						if (!timer || timer.paused) {
 
-					              	const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-					              	const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-					              	const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			        		// Start the timer
+							const start = timer && timer.elapsed ? new Date().getTime() - timer.elapsed : new Date().getTime();
+							timers[id] = {
+								id: id,
+								startTime: start,
+								timerId: setInterval(function() {
+									const now = new Date().getTime();
+									const distance = now - start;
+									const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+									const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+									const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+									const timerEl = document.querySelector(`#timer${id}`);
+									timerEl.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+			            			// Update elapsed time
+									elapsedTimes[id] = distance;
+									const totalElapsed = Object.values(elapsedTimes).reduce((acc, val) => acc + val, 0);
+									const totalElapsedEl = document.querySelector('#totalWorkedToday');
+									totalElapsedEl.innerHTML = `Total elapsed time: ${Math.floor(totalElapsed / (1000 * 60 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60)) / 1000).toString().padStart(2, '0')}`;
+								}, 1000),
+								paused: false,
+								elapsed: timer ? timer.elapsed : 0
+							};
+							button.innerHTML = `<x-heroicon-o-pause class="h-7 w-7 dark:text-white" />`;
 
-					              	const timerEl = document.querySelector(`#timer${id}`);
-					              	timerEl.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-				            }, 1000),
-				            paused: false,
-				            elapsed: timer ? timer.elapsed : 0
-				          };
-				          	button.innerHTML = `<x-heroicon-o-pause class="h-7 w-7 dark:text-white" />`;
+						} else {
 
-				        } else {
-				          	// Pause the timer
-				          	clearInterval(timer.timerId);
-				          	timer.elapsed = new Date().getTime() - timer.startTime;
-				          	timer.paused = true;
+			        		// Pause the timer
+							clearInterval(timer.timerId);
+							timer.elapsed = new Date().getTime() - timer.startTime;
+							timer.paused = true;
 
-				          	button.innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />	`;
-				        }
-			      	});
-			    });
-			});     
+			        		// Update elapsed time
+							elapsedTimes[id] = timer.elapsed;
+							const totalElapsed = Object.values(elapsedTimes).reduce((acc, val) => acc + val, 0);
+						}
 
+					}); 
+				});
+			});
+
+
+			// end
         });
     </script>
 </x-filament::page>
