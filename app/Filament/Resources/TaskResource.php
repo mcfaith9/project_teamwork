@@ -2,25 +2,29 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\TaskResource\Pages;
 use App\Filament\Resources\TaskResource\RelationManagers;
 use App\Models\Task;
 use App\Models\User;
+use Awcodes\FilamentBadgeableColumn\Components\Badge;
+use Awcodes\FilamentBadgeableColumn\Components\BadgeField;
+use Awcodes\FilamentBadgeableColumn\Components\BadgeableColumn;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Awcodes\FilamentBadgeableColumn\Components\Badge;
-use Awcodes\FilamentBadgeableColumn\Components\BadgeField;
-use Awcodes\FilamentBadgeableColumn\Components\BadgeableColumn;
 
 class TaskResource extends Resource
 {
@@ -33,11 +37,11 @@ class TaskResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')->required(),
-                TextInput::make('description')->required(),
                 Forms\Components\MultiSelect::make('assignee_id')
                     ->label('Assigned to')
                     ->multiple()
-                    ->options(User::pluck('name', 'id')->toArray()),
+                    ->options(User::pluck('name', 'id')->toArray()), 
+                Textarea::make('description')->required(),                               
                 TextInput::make('creator_id')
                     ->label('Creator')
                     ->default(auth()->user()->id)
@@ -57,22 +61,43 @@ class TaskResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->description(fn (Task $record): string => $record->description)
-                    ->searchable(),
+                    ->wrap()
+                    ->searchable()
+                    ->sortable(),
                 // TextColumn::make('assignee_id')->label('Assigned To'),
-                BadgeableColumn::make('assignee_id')
-                    ->badges([
-                        Badge::make('Attach IDs')
-                    ])->sortable()->searchable()->label('Assigned To'),
-                TextColumn::make('creator.name')->label('Created By'),
+                TextColumn::make('assignee_id')
+                    ->searchable()
+                    ->label('Assigned To'),
+                BadgeColumn::make('creator.name')
+                    ->colors([
+                        'danger',
+                    ])
+                    ->label('Created By')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('due_date')->label('Due Date')->dateTime('j F Y')->searchable()->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('due_date_past')
+                    ->label('Past')
+                    ->query(fn (Builder $query): Builder => $query->where('due_date', '<', today())),
+                Tables\Filters\Filter::make('due_date_today')
+                    ->label('Today')
+                    ->query(fn (Builder $query): Builder => $query->where('due_date', '=', today())),
+                Tables\Filters\Filter::make('due_date_future')
+                    ->label('Future')
+                    ->query(fn (Builder $query): Builder => $query->where('due_date', '>', today())),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                // Tables\Actions\DeleteBulkAction::make(),
+                // FilamentExportBulkAction::make('export')
+            ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('ExportPDF')->defaultFormat('pdf')->label('Export PDF')->button()->color('success'),
+                FilamentExportHeaderAction::make('ExportXLSX')->defaultFormat('xlsx')->label('Export Excel')->button()->color('success'),
+                FilamentExportHeaderAction::make('ExportCSV')->defaultFormat('csv')->label('Export CSV')->button()->color('success'),
             ]);
     }
     

@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Hash;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\BooleanColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
@@ -88,24 +89,35 @@ class UserResource extends Resource
         $table
             ->columns([
                 TextColumn::make('id')->sortable()->label(trans('filament-user::user.resource.id')),
-                TextColumn::make('name')->sortable()->searchable()->label(trans('filament-user::user.resource.name')),
-                TextColumn::make('email')->sortable()->searchable()->label(trans('filament-user::user.resource.email')),
-                BooleanColumn::make('email_verified_at')->sortable()->searchable()->label(trans('filament-user::user.resource.email_verified_at')),
+                TextColumn::make('name')
+                    ->description(fn (User $record): string => $record->email)
+                    ->sortable()
+                    ->searchable()
+                    ->label(trans('filament-user::user.resource.name')),
+                BadgeColumn::make('roles.name')
+                    ->colors([
+                        'danger',
+                    ])
+                    ->label('Roles'),
+                BooleanColumn::make('email_verified_at')
+                    ->sortable()
+                    ->searchable()
+                    ->label(trans('filament-user::user.resource.email_verified_at')),
                 // Tables\Columns\TextColumn::make('created_at')->label(trans('filament-user::user.resource.created_at'))
                 //     ->dateTime('M j, Y')->sortable(),
                 // Tables\Columns\TextColumn::make('updated_at')->label(trans('filament-user::user.resource.updated_at'))
                 //     ->dateTime('M j, Y')->sortable(),
-                BadgeableColumn::make('roles.name')
-                    ->badges([
-                        Badge::make('employee_badge')
-                            ->label('Super Admin')
-                            ->color('success')
-                            ->visible(fn ($record): bool => $record->roles[0]['name'] == 'super_admin'),
-                        Badge::make('admin_badge')
-                            ->label('Admin')
-                            ->color('success')
-                            ->visible(fn ($record): bool => $record->roles[0]['name'] == 'user'),
-                    ])->sortable()->searchable()->label(trans('Roles'))
+                // BadgeableColumn::make('roles.name')
+                //     ->badges([
+                //         Badge::make('employee_badge')
+                //             ->label('Super Admin')
+                //             ->color('success')
+                //             ->visible(fn ($record): bool => $record->roles[0]['name'] == 'super_admin'),
+                //         Badge::make('admin_badge')
+                //             ->label('Admin')
+                //             ->color('success')
+                //             ->visible(fn ($record): bool => $record->roles[0]['name'] == 'user'),
+                //     ])->sortable()->searchable()->label(trans('Roles'))                
             ])
             ->filters([
                 Tables\Filters\Filter::make('verified')
@@ -116,7 +128,7 @@ class UserResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->whereNull('email_verified_at')),
             ])
             ->bulkActions([
-                FilamentExportBulkAction::make('export')
+                // FilamentExportBulkAction::make('export')
             ])
             ->headerActions([
                 FilamentExportHeaderAction::make('ExportPDF')->defaultFormat('pdf')->label('Export PDF')->button()->color('success'),

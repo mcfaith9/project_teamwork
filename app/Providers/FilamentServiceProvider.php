@@ -7,7 +7,6 @@ use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Navigation\UserMenuItem;
-use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use pxlrbt\FilamentEnvironmentIndicator\FilamentEnvironmentIndicator;
