@@ -3,9 +3,7 @@
 namespace App\Providers;
 
 use Filament\Facades\Filament;
-use Filament\Navigation\UserMenuItem;
 use Illuminate\Support\ServiceProvider;
-use pxlrbt\FilamentEnvironmentIndicator\FilamentEnvironmentIndicator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,19 +23,14 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        Filament::serving(function () {
-            Filament::registerUserMenuItems([
-                UserMenuItem::make()
-                    ->label('My Profile')
-                    ->url(route('filament.pages.my-profile'))
-                    ->icon('heroicon-s-user-circle'),
-            ]);
-        });
+    {       
+        Filament::registerRenderHook(
+            'global-search.start',
+            fn (): View => view('components/topbar-navigation-list'),
+        );  
 
-        FilamentEnvironmentIndicator::configureUsing(function (FilamentEnvironmentIndicator $indicator) {
-            $indicator->showBadge = fn () => true;
-            $indicator->showBorder = fn () => true;
-        }, isImportant: true);
+        Filament::registerScripts([
+            'https://code.iconify.design/2/2.2.1/iconify.min.js',
+        ], true);
     }
 }

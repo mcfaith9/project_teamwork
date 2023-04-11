@@ -6,9 +6,11 @@ use Filament\Facades\Filament;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
+use Filament\Navigation\UserMenuItem;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use pxlrbt\FilamentEnvironmentIndicator\FilamentEnvironmentIndicator;
 use ShuvroRoy\FilamentSpatieLaravelHealth\Pages\HealthCheckResults;
 use Spatie\Health\Checks\Checks\CacheCheck;
 use Spatie\Health\Checks\Checks\DatabaseCheck;
@@ -47,10 +49,19 @@ class FilamentServiceProvider extends ServiceProvider
         $this->customAdminMenu();
         $this->configureHealthCheck();
 
-        Filament::registerRenderHook(
-            'global-search.start',
-            fn (): View => view('components/topbar-navigation-list'),
-        );  
+        Filament::serving(function () {
+            Filament::registerUserMenuItems([
+                UserMenuItem::make()
+                    ->label('My Profile')
+                    ->url(route('filament.pages.my-profile'))
+                    ->icon('heroicon-s-user-circle'),
+            ]);
+        });
+
+        FilamentEnvironmentIndicator::configureUsing(function (FilamentEnvironmentIndicator $indicator) {
+            $indicator->showBadge = fn () => true;
+            $indicator->showBorder = fn () => true;
+        }, isImportant: true);
     }
 
 
