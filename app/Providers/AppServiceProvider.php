@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Filament\Facades\Filament;
 use Filament\Navigation\UserMenuItem;
+use Illuminate\Support\ServiceProvider;
 use pxlrbt\FilamentEnvironmentIndicator\FilamentEnvironmentIndicator;
 
 class AppServiceProvider extends ServiceProvider

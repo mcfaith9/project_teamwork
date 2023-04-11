@@ -7,17 +7,17 @@ use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use ShuvroRoy\FilamentSpatieLaravelHealth\Pages\HealthCheckResults;
+use Spatie\Health\Checks\Checks\CacheCheck;
+use Spatie\Health\Checks\Checks\DatabaseCheck;
 use Spatie\Health\Checks\Checks\DebugModeCheck;
 use Spatie\Health\Checks\Checks\EnvironmentCheck;
 use Spatie\Health\Checks\Checks\OptimizedAppCheck;
 use Spatie\Health\Checks\Checks\RedisCheck;
-use Spatie\Health\Facades\Health;
-use Spatie\Health\Checks\Checks\CacheCheck;
-use Spatie\Health\Checks\Checks\DatabaseCheck;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
+use Spatie\Health\Facades\Health;
 
 
 class FilamentServiceProvider extends ServiceProvider
@@ -71,7 +71,7 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->sort(2)
                         ]),
 
-                    NavigationGroup::make('Authentication')
+                    NavigationGroup::make('Admin')
                         ->items([
                             NavigationItem::make('Users')
                                 ->url('/admin/users')
@@ -82,6 +82,11 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->url('/admin/shield/roles')
                                 ->icon('heroicon-o-shield-check')
                                 ->sort(2),
+
+                            NavigationItem::make('Task')
+                                ->url('/admin/tasks')
+                                ->icon('tabler-subtask')
+                                ->sort(3),   
                         ]),
 
                     NavigationGroup::make('Tools')
