@@ -103,21 +103,6 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->label(trans('filament-user::user.resource.email_verified_at')),
-                // Tables\Columns\TextColumn::make('created_at')->label(trans('filament-user::user.resource.created_at'))
-                //     ->dateTime('M j, Y')->sortable(),
-                // Tables\Columns\TextColumn::make('updated_at')->label(trans('filament-user::user.resource.updated_at'))
-                //     ->dateTime('M j, Y')->sortable(),
-                // BadgeableColumn::make('roles.name')
-                //     ->badges([
-                //         Badge::make('employee_badge')
-                //             ->label('Super Admin')
-                //             ->color('success')
-                //             ->visible(fn ($record): bool => $record->roles[0]['name'] == 'super_admin'),
-                //         Badge::make('admin_badge')
-                //             ->label('Admin')
-                //             ->color('success')
-                //             ->visible(fn ($record): bool => $record->roles[0]['name'] == 'user'),
-                //     ])->sortable()->searchable()->label(trans('Roles'))                
             ])
             ->filters([
                 Tables\Filters\Filter::make('verified')
