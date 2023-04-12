@@ -19,17 +19,34 @@ class Timer extends Page
     public function mount()
     {        
         $userId = auth()->id();
-        $taskSequence = DB::table('task_sequence')
-                        ->where('user_id', $userId)
-                        ->first();
+        $taskSequence = DB::table('task_sequence')->where('user_id', $userId)->first();
 
-        if ($taskSequence) {
-            $sequence = json_decode($taskSequence->sequence);
-            $this->tasks = Task::whereIn('id', $sequence)->orderByRaw('FIELD(id, '.implode(',', $sequence).')')->get()->toArray();
-            // do something with the $sequence array
-        } else {
+        // If the user has not created any task sequence
+        if (!$taskSequence) {
+            // Return all tasks as array
             $this->tasks = Task::all()->toArray();
+            return;
         }
+
+        // Do something with the $sequence array
+        $sequence = json_decode($taskSequence->sequence);
+
+        // Get tasks that are in the sequence
+        $tasksInSequence = Task::whereIn('id', $sequence)->orderByRaw('FIELD(id, '.implode(',', $sequence).')');
+
+        // Get tasks that are not in the sequence
+        $tasksNotInSequence = Task::whereNotIn('id', $sequence);
+
+        // If all tasks are already in the sequence
+        if (!$tasksNotInSequence->exists()) {
+            // Return tasks that are in the sequence
+            $this->tasks = $tasksInSequence->get()->toArray();
+            return;
+        }
+
+        // If there are tasks that are not in the sequence
+        // Return all tasks that are in the sequence and not in the sequence
+        $this->tasks = $tasksInSequence->union($tasksNotInSequence)->get()->toArray();
     }
 
     public function storeSequence(Request $request)

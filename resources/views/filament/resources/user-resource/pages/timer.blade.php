@@ -66,10 +66,10 @@
                             sequence: sequence,
                         },
                         success: function (data) {
-                            console.log(data);
+                            console.log('/tasks/store-sequence =>', data);
                         },
                         error: function (xhr, status, error) {
-                            console.error(error);
+                            console.error('/tasks/store-sequence =>', error);
                         }
                     });
                 }

@@ -7,7 +7,7 @@
             <a href="/admin/users/myprojects" class="block py-2 pl-3 pr-3 text-gray-700 rounded hover:bg-gray-500/5 focus:bg-gray-500/5 dark:text-gray-300 dark:hover:bg-gray-700">My projects</a>
         </li>
         <li>
-            <a href="/admin/activities" class="block py-2 pl-3 pr-3 text-gray-700 rounded hover:bg-gray-500/5 focus:bg-gray-500/5 dark:text-gray-300 dark:hover:bg-gray-700">Activity</a>
+            <a href="/admin/activity-logs" class="block py-2 pl-3 pr-3 text-gray-700 rounded hover:bg-gray-500/5 focus:bg-gray-500/5 dark:text-gray-300 dark:hover:bg-gray-700">Activity</a>
         </li>
         <li>
             <a href="/admin/users/inbox" class="block py-2 pl-3 pr-3 text-gray-700 rounded hover:bg-gray-500/5 focus:bg-gray-500/5 dark:text-gray-300 dark:hover:bg-gray-700">Inbox</a>
