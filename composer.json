@@ -25,7 +25,6 @@
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.12",
         "marjose123/filament-lockscreen": "^1.1",
-        "phpsa/filament-feed": "^1.0",
         "pxlrbt/filament-environment-indicator": "^1.0",
         "pxlrbt/filament-spotlight": "^0.3.6",
         "ryangjchandler/blade-tabler-icons": "*",
