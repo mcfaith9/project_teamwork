@@ -13,23 +13,27 @@
 		</div>		
 	</div>
 
+    <div class="border-t border-gray-300 my-4"></div>
+
     <ul id="task-list-item" class="bg-white border border-gray-200 divide-y divide-gray-200 dark:bg-gray-800 dark:border-gray-700">
-    	@foreach ($items as $item)
-    	    <li class="py-4 px-4 flex dark:hover:bg-gray-500/10">
+    	@foreach ($tasks as $task)
+    	    <li class="py-4 px-4 flex dark:hover:bg-gray-500/10" id="{{ $task['id'] }}">
     	        <div class="flex items-center mr-4">
     	            <x-tabler-drag-drop-2 class="h-5 w-5 text-gray-400 cursor-move" style="cursor: grab!important" />
     	        </div>
     	        <div class="flex-1">
-    	            <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $item['title'] }}</h4>
-    	            <p class="text-gray-500 dark:text-white pr-1">{{ $item['description'] }}</p>
+    	            <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $task['title'] }}</h4>
+    	            <p class="text-gray-500 dark:text-white pr-1">{{ $task['description'] }}</p>
     	        </div>
     	        <div class="flex items-center">
     	            <div wire:ignore>
-    	                @if(isset($item['previous_time']))
-	                        <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $item['id'] }}">{{ $item['previous_time'] }}</p>
+    	                @if(isset($task['previous_time']))
+	                        <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $task['id'] }}">{{ $task['previous_time'] }}</p>
+                        @else 
+                            <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $task['id'] }}">00:00:00</p>
 	                    @endif
     	            </div>
-    	            <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" data-id="{{ $item['id'] }}" id="timerBtn_{{ $item['id'] }}">
+    	            <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" data-id="{{ $task['id'] }}" id="timerBtn_{{ $task['id'] }}">
     	                <x-heroicon-o-play class="h-7 w-7 dark:text-white" />
     	            </button>
     	        </div>
@@ -48,7 +52,26 @@
                 animation: 150,
                 handle: '.cursor-move',
                 onEnd: function (evt) {
-                    console.log('should trigger ajax to save sequence')
+                    var listItems = evt.from.children;
+                    var sequence = [];
+                    for (var i = 0; i < listItems.length; i++) {
+                        sequence.push(listItems[i].getAttribute('id'));
+                    }
+                    // you can now send an AJAX request to save the new sequence
+                    $.ajax({
+                        url: '/tasks/store-sequence',
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            sequence: sequence,
+                        },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
                 }
             });
 
@@ -133,7 +156,6 @@
 					}); 
 				});
 			});
-
 
 			// end
         });

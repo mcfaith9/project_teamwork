@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Filament\Resources\UserResource\Pages\Timer;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Store Task Sequence
+Route::post('/tasks/store-sequence', [Timer::class, 'storeSequence'])
+    ->name('timer.store-sequence')
+    ->middleware(['auth']);

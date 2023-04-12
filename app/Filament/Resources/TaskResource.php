@@ -37,10 +37,10 @@ class TaskResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')->required(),
-                Forms\Components\MultiSelect::make('assignee_id')
+                $userIds = Forms\Components\MultiSelect::make('assignee_id')
                     ->label('Assigned to')
                     ->multiple()
-                    ->options(User::pluck('name', 'id')->toArray()), 
+                    ->options(User::pluck('name','id')->toArray()), 
                 Textarea::make('description')->required(),                               
                 TextInput::make('creator_id')
                     ->label('Creator')
@@ -52,7 +52,6 @@ class TaskResource extends Resource
                     ->label('Due Date')
                     ->minDate(now())
             ]);
-
     }
 
     public static function table(Table $table): Table
