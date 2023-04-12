@@ -14,6 +14,8 @@ class Timer extends Page
 
     protected static string $view = 'filament.resources.user-resource.pages.timer';
 
+    protected static ?string $title = 'Track Time';
+
     public $tasks;
 
     public function mount()
