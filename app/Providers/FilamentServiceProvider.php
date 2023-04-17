@@ -83,7 +83,7 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->url(route('filament.pages.dashboard'))
                                 ->icon('tabler-chart-treemap'),
                             NavigationItem::make('Timer')
-                                ->url('/admin/users/timer')
+                                ->url('/app/users/timer')
                                 ->icon('tabler-clock-hour-3')
                                 ->sort(2)
                         ]),
@@ -91,17 +91,17 @@ class FilamentServiceProvider extends ServiceProvider
                     NavigationGroup::make('Admin')
                         ->items([
                             NavigationItem::make('Users')
-                                ->url('/admin/users')
+                                ->url('/app/users')
                                 ->icon('heroicon-o-user-group')
                                 ->sort(1),
 
                             NavigationItem::make('Roles')
-                                ->url('/admin/shield/roles')
+                                ->url('/app/shield/roles')
                                 ->icon('heroicon-o-shield-check')
                                 ->sort(2),
 
                             NavigationItem::make('Task')
-                                ->url('/admin/tasks')
+                                ->url('/app/tasks')
                                 ->icon('tabler-subtask')
                                 ->sort(3),   
                         ]),
@@ -109,16 +109,16 @@ class FilamentServiceProvider extends ServiceProvider
                     NavigationGroup::make('Tools')
                         ->items([
                             NavigationItem::make('Calendar | ' . \Carbon\Carbon::today()->isoFormat('dddd, D MMM'))
-                                ->url('/admin/timex')
+                                ->url('/app/timex')
                                 ->icon('timex-timex')
                                 ->sort(1),
 
                             NavigationItem::make('Events')
-                                ->url('/admin/timex-events')
+                                ->url('/app/timex-events')
                                 ->icon('heroicon-o-calendar')
                                 ->sort(2),
                             NavigationItem::make('Page Hints')
-                                ->url('/admin/page-hints')
+                                ->url('/app/page-hints')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->sort(3)
                         ]),
@@ -129,7 +129,7 @@ class FilamentServiceProvider extends ServiceProvider
                             NavigationGroup::make('Timer')
                                 ->items([
                                         NavigationItem::make('TD')
-                                            ->url('/admin/users/timer')
+                                            ->url('/app/users/timer')
                                             ->icon('tabler-list-details')
                                             ->sort(1),
                                         NavigationItem::make('Teamwork')
@@ -138,7 +138,7 @@ class FilamentServiceProvider extends ServiceProvider
                                             ->sort(2),
                                     ]),
                             NavigationItem::make('Time Dashboard')
-                                ->url('/admin/time/dashboard')
+                                ->url('/app/time/dashboard')
                                 ->icon('heroicon-o-chart-pie')
                                 ->sort(2),
                             NavigationItem::make('Edit Time')
@@ -164,7 +164,7 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->sort(1),
 
                             NavigationItem::make('Backups')
-                                ->url('/admin/backups')
+                                ->url('/app/backups')
                                 ->icon('tabler-brand-google-drive')
                                 ->sort(2),
                         ]),                    

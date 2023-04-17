@@ -44,12 +44,15 @@ class TaskResource extends Resource
                     ->multiple()
                     ->options(User::pluck('name','id')->toArray()), 
                 Textarea::make('description')->required(),                               
-                TextInput::make('creator_id')
+                TextInput::make('creator_name')
                     ->label('Creator')
-                    ->default(auth()->user()->id)
+                    ->default(auth()->user()->name)
                     ->disabled()
-                    ->hint('Creator '.auth()->user()->name)
-                    ->hintIcon('tabler-info-circle'),                    
+                    ->hint('Creator: '.auth()->user()->name)
+                    ->hintIcon('tabler-info-circle'),
+                TextInput::make('creator_id')
+                    ->default(auth()->user()->id)
+                    ->hidden(),                 
                 DatePicker::make('due_date')
                     ->label('Due Date')
                     ->minDate(now())
