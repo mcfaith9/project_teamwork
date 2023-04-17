@@ -25,6 +25,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Awcodes\FilamentBadgeableColumn\Components\BadgeableTagsColumn;
 
 class TaskResource extends Resource
 {
@@ -37,8 +38,9 @@ class TaskResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')->required(),
-                $userIds = Forms\Components\MultiSelect::make('assignee_id')
+                Forms\Components\MultiSelect::make('user_id')                    
                     ->label('Assigned to')
+                    ->relationship('assignees','user_id')
                     ->multiple()
                     ->options(User::pluck('name','id')->toArray()), 
                 Textarea::make('description')->required(),                               
@@ -63,8 +65,10 @@ class TaskResource extends Resource
                     ->wrap()
                     ->searchable()
                     ->sortable(),
-                // TextColumn::make('assignee_id')->label('Assigned To'),
-                TextColumn::make('assignee_id')
+                BadgeableTagsColumn::make('users.name')
+                    ->colors([
+                        '#4caf50'
+                    ])
                     ->searchable()
                     ->label('Assigned To'),
                 BadgeColumn::make('creator.name')

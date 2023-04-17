@@ -19,14 +19,21 @@ class Timer extends Page
     public $tasks;
 
     public function mount()
-    {        
+    {
         $userId = auth()->id();
+
+        // Get the task ids assigned to the user
+        $taskIds = DB::table('task_user')->where('user_id', $userId)->pluck('task_id')->toArray();
+
+        // Get the tasks assigned to the user
+        $assignedTasks = Task::whereIn('id', $taskIds)->get()->toArray();
+
         $taskSequence = DB::table('task_sequence')->where('user_id', $userId)->first();
 
         // If the user has not created any task sequence
         if (!$taskSequence) {
-            // Return all tasks as array
-            $this->tasks = Task::all()->toArray();
+            // Return all assigned tasks as array
+            $this->tasks = $assignedTasks;
             return;
         }
 
@@ -34,21 +41,31 @@ class Timer extends Page
         $sequence = json_decode($taskSequence->sequence);
 
         // Get tasks that are in the sequence
-        $tasksInSequence = Task::whereIn('id', $sequence)->orderByRaw('FIELD(id, '.implode(',', $sequence).')');
+        $tasksInSequence = collect([]);
+
+        foreach ($sequence as $taskId) {
+            $task = collect($assignedTasks)->firstWhere('id', $taskId);
+
+            if ($task) {
+                $tasksInSequence->push($task);
+            }
+        }
 
         // Get tasks that are not in the sequence
-        $tasksNotInSequence = Task::whereNotIn('id', $sequence);
+        $tasksNotInSequence = collect($assignedTasks)->reject(function ($task) use ($tasksInSequence) {
+            return $tasksInSequence->contains('id', $task['id']);
+        });
 
         // If all tasks are already in the sequence
-        if (!$tasksNotInSequence->exists()) {
+        if ($tasksNotInSequence->isEmpty()) {
             // Return tasks that are in the sequence
-            $this->tasks = $tasksInSequence->get()->toArray();
+            $this->tasks = $tasksInSequence->toArray();
             return;
         }
 
         // If there are tasks that are not in the sequence
         // Return all tasks that are in the sequence and not in the sequence
-        $this->tasks = $tasksInSequence->union($tasksNotInSequence)->get()->toArray();
+        $this->tasks = $tasksInSequence->merge($tasksNotInSequence)->toArray();
     }
 
     public function storeSequence(Request $request)

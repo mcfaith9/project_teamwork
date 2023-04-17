@@ -26,25 +26,21 @@ class Task extends Model
         'assignee_id' => 'array',
         'assignees' => 'array',
     ];
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id');
-    }
     
     public function assignees()
     {
-        return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id');
-    }
-
-
-    public function assignee()
-    {
-        return $this->belongsTo(User::class, 'assignee_id')->select('name');
+        return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id')->withPivot('user_id');
     }
 
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id')
+                    ->withPivot('user_id')
+                    ->select('users.name');
     }
 }

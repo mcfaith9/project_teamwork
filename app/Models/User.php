@@ -44,8 +44,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function hasTask()
-    {
-        return $this->hasMany(Task::class);
-    }
+   public function tasks()
+   {
+       return $this->belongsToMany(Task::class, 'task_user', 'user_id', 'task_id');
+   }
 }
