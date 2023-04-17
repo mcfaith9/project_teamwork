@@ -34,46 +34,72 @@
 
 	<div class="border-t border-gray-300 my-4"></div>
 
-	<ul class="border-b border-gray-200 divide-y divide-gray-200">
-	    <li class="flex items-center justify-between py-4 px-6 bg-gray-50 hover:bg-gray-100 dark:bg-gray-900">
-	        <div class="flex items-center">
-	            <div class="h-10 w-10 bg-gray-300 rounded-md mr-4"></div>
-	            <div>
-	                <p class="text-gray-900 font-medium dark:text-white">Song Title</p>
-	                <p class="text-gray-500 dark:text-gray-400">Artist Name</p>
-	            </div>
-	        </div>
-	        <div class="flex items-center space-x-2">
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <x-tabler-arrow-up-right class="h-5 w-5" />
-	            </button>
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <x-heroicon-s-chat class="h-5 w-5" />       
-	            </button>
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <x-tabler-eye class="h-5 w-5" />     
-	            </button>
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <x-tabler-calendar-event class="h-5 w-5" />
-	            </button>
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <x-css-sand-clock class="h-5 w-5" />    
-	            </button>
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <x-tabler-bell class="h-5 w-5" />     
-	            </button>
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <x-tabler-tag class="h-5 w-5" />     
-	            </button>
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <x-tabler-flag-3 class="h-5 w-5" />     
-	            </button>
-	            <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                <span>0%</span>      
-	            </button>
-	        </div>
-	    </li>
-	    <!-- Add more songs as needed -->
-	</ul>
+	<div class="grid grid-cols-12 gap-4">
+	    <div class="col-span-9">
+	        <ul class="border-b border-gray-200 divide-y divide-gray-200">
+	            @foreach($taskWork as $work)
+	                <li class="flex items-center justify-between py-4 px-6 bg-gray-50 hover:bg-gray-100 dark:bg-gray-900">
+	                    <div class="flex items-center">
+	                        <div class="h-10 w-10 bg-gray-300 rounded-md mr-4"></div>
+	                        <div>
+	                            <p class="text-gray-900 font-medium dark:text-white">{{ $work->title }}</p>
+	                        </div>
+	                    </div>
+	                    <div class="flex items-center space-x-2">
+	                        <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+	                            <x-tabler-arrow-up-right class="h-4 w-4" />
+	                        </button>
+	                        <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+	                            <x-heroicon-s-chat class="h-4 w-4" />       
+	                        </button>
+	                        <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+	                            <x-tabler-eye class="h-4 w-4" />     
+	                        </button>
+
+                            <button class="tooltip inline-block flex items-center" title="More Details..." onclick="toggleDetails({{ $work->id }})">
+                                <x-css-details-more class="h-5 w-5" />
+                            </button>
+
+	                        <div id="details_{{ $work->id }}" class="flex items-center justify-between space-x-2 hidden">
+                                <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <x-tabler-calendar-event class="h-4 w-4" />
+                                </button>
+                                <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <x-css-sand-clock class="h-4 w-4" />    
+                                </button>
+                                <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <x-tabler-bell class="h-4 w-4" />     
+                                </button>
+                                <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <x-tabler-tag class="h-4 w-4" />     
+                                </button>
+                                <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <x-tabler-flag-3 class="h-4 w-4" />     
+                                </button>
+                                <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <span>0%</span>      
+                                </button>
+                            </div>
+	                    </div>
+	                </li> 
+	            @endforeach
+	        </ul>
+	    </div>
+	    <div class="col-span-3">
+	        <h1 class="text-gray-900 font-medium dark:text-white">Milestones</h1>
+	        <p class="dark:text-whit">You have no milestones due today</p>
+	        <div class="border-t border-gray-300 my-4"></div>
+	        <h1 class="text-gray-900 font-medium dark:text-white">Events</h1>
+	        <p class="dark:text-whit">You have no events scheduled today</p>
+	    </div>
+	</div>
+
+
+    <script>
+    function toggleDetails(workId) {
+        const details = document.querySelector(`#details_${workId}`);
+        details.classList.toggle('hidden');
+    }
+    </script>
 
 </x-filament::page>
