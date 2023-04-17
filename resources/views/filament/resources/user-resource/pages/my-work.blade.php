@@ -36,9 +36,9 @@
 
 	<div class="grid grid-cols-12 gap-4">
 	    <div class="col-span-9">
-	        <ul class="border-b border-gray-200 divide-y divide-gray-200">
+	        <ul class="border-gray-200 divide-y divide-gray-200 space-y-1">
 	            @foreach($taskWork as $work)
-	                <li class="flex items-center justify-between py-4 px-6 bg-gray-50 hover:bg-gray-100 dark:bg-gray-900">
+	                <li class="flex items-center justify-between py-4 px-6 bg-white rounded-xl hover:bg-gray-100 dark:bg-gray-900">
 	                    <div class="flex items-center">
 	                        <div class="h-10 w-10 bg-gray-300 rounded-md mr-4"></div>
 	                        <div>

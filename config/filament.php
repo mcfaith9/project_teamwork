@@ -139,7 +139,8 @@ return [
 
     'widgets' => [
         'namespace' => 'App\\Filament\\Widgets',
-        'path' => app_path('Filament/Widgets'),
+        // 'path' => app_path('Filament/Widgets'),
+        'path' => '',
         'register' => [
             Widgets\AccountWidget::class,
             Widgets\FilamentInfoWidget::class,

@@ -63,6 +63,13 @@ class FilamentServiceProvider extends ServiceProvider
         }, isImportant: true);
     }
 
+    public static function getWidgets(): array
+    {
+        return [
+            Widgets\CustomerOverview::class,
+        ];
+    }
+
 
     private function customAdminMenu()
     {
@@ -122,7 +129,7 @@ class FilamentServiceProvider extends ServiceProvider
                             NavigationGroup::make('Timer')
                                 ->items([
                                         NavigationItem::make('TD')
-                                            ->url('#')
+                                            ->url('/admin/users/timer')
                                             ->icon('tabler-list-details')
                                             ->sort(1),
                                         NavigationItem::make('Teamwork')
@@ -131,7 +138,7 @@ class FilamentServiceProvider extends ServiceProvider
                                             ->sort(2),
                                     ]),
                             NavigationItem::make('Time Dashboard')
-                                ->url('#')
+                                ->url('/admin/time/dashboard')
                                 ->icon('heroicon-o-chart-pie')
                                 ->sort(2),
                             NavigationItem::make('Edit Time')
