@@ -20,13 +20,13 @@ class TimeStatsOverview extends Widget
         $last_week = $last_week_start . ' - ' . $last_week_end;
 
         return [
-            Card::make('Time Worked Today', '00h 00m')
+            Card::make('Time Worked Today', '0h 00m')
                 ->description(\Carbon\Carbon::today()->isoFormat('dddd, D MMM')),
-            Card::make('Time Worked This Week', '00h 00m')
+            Card::make('Time Worked This Week', '0h 00m')
                 ->description($this_week),
-            Card::make('Time Worked Last Week', '00h 00m')
+            Card::make('Time Worked Last Week', '0h 00m')
                 ->description($last_week),
-            Card::make('Time Worked This Month', '00h 00m')
+            Card::make('Time Worked This Month', '0h 00m')
                 ->description(\Carbon\Carbon::today()->isoFormat('MMM, YYYY'))
                 ->chart([4, 5, 3, 7, 9, 8, 2, 9])
                 ->color('success'),

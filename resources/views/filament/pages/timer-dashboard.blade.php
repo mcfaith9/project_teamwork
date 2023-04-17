@@ -3,7 +3,7 @@
     
     <div class="flex items-center justify-between">
         <div class="inline-flex">
-            <h2> Reports </h2>
+            <h2 class="filament-header-heading"> Reports </h2>
         </div>
 
         <div class="flex items-center justify-end">
@@ -27,6 +27,64 @@
     <x-filament::card>
         <span>Timesheet</span>
 
+
+        <div class="min-w-full overflow-hidden rounded-lg shadow-xs">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-100 text-left">
+                        @foreach($thisWeek as $week)
+                        <th class="px-4 py-2 text-sm font-medium text-gray-500">{{ $week }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td class="px-1 py-1 whitespace-nowrap">
+                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
+                                <div class="progress h-px" style="width: 50%"></div>
+                            </div>
+                            <p class="text-center text-sm text-gray-500">0h 00m</p>
+                        </td>
+                        <td class="px-1 py-1 whitespace-nowrap">
+                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
+                                <div class="progress h-px" style="width: 75%"></div>
+                            </div>
+                            <p class="text-center text-sm text-gray-500">0h 00m</p>
+                        </td>
+                        <td class="px-1 py-1 whitespace-nowrap">
+                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
+                                <div class="progress h-px" style="width: 30%"></div>
+                            </div>
+                            <p class="text-center text-sm text-gray-500">0h 00m</p>
+                        </td>
+                        <td class="px-1 py-1 whitespace-nowrap">
+                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
+                                <div class="progress h-px" style="width: 80%"></div>
+                            </div>
+                            <p class="text-center text-sm text-gray-500">0h 00m</p>
+                        </td>
+                        <td class="px-1 py-1 whitespace-nowrap">
+                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
+                                <div class="progress h-px" style="width: 20%"></div>
+                            </div>
+                            <p class="text-center text-sm text-gray-500">0h 00m</p>
+                        </td>
+                        <td class="px-1 py-1 whitespace-nowrap">
+                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
+                                <div class="progress h-px" style="width: 60%"></div>
+                            </div>
+                            <p class="text-center text-sm text-gray-500">0h 00m</p>
+                        </td>
+                        <td class="px-1 py-1 whitespace-nowrap">
+                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
+                                <div class="progress h-px" style="width: 90%"></div>
+                            </div>
+                            <p class="text-center text-sm text-gray-500">0h 00m</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </x-filament::card>
     
     <style type="text/css">
@@ -39,6 +97,19 @@
           border-top-right-radius: 0.5rem;
           border-bottom-right-radius: 0.5rem;
         }
+
+        .progress-bar {
+          background-color: #eee;
+          border-radius: 4px;
+          height: 10px;
+          margin: 10px 0;
+        }
+
+        .progress {
+          background-color: #4caf50;
+          height: 100%;
+          border-radius: 4px;
+        }
     </style>
-    
+
 </x-filament::page>

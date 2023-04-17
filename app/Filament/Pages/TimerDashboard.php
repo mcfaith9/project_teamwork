@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
 use App\Filament\Widgets\TimeStatsOverview;
+use Carbon\Carbon;
 
 class TimerDashboard extends Page
 {
@@ -21,4 +22,18 @@ class TimerDashboard extends Page
             TimeStatsOverview::class,
         ];
     }
+
+    public $thisWeek;
+
+    public function mount() { 
+
+        $carbonThisWeek = [];
+
+        for ($i = 0; $i < 7; $i++) {
+            $carbonThisWeek[] = Carbon::now()->startOfWeek()->addDays($i)->format('D, M d, Y');
+        }
+        
+        $this->thisWeek = $carbonThisWeek;
+    }
+
 }
