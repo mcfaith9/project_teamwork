@@ -24,6 +24,8 @@ class MyWork extends Page
         }
 
         // Otherwise, get tasks assigned to the authenticated user
-        $this->taskWork = Task::whereRaw('JSON_CONTAINS(assignee_id, \'["' . $userId . '"]\')')->get();
+        $this->taskWork = Task::whereHas('assignees', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->get();
     }
 }
