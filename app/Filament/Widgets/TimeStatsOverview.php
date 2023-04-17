@@ -2,12 +2,12 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget as Widget;
 use Filament\Widgets\StatsOverviewWidget\Card;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 
-class TimeStatsOverview extends BaseWidget
+class TimeStatsOverview extends Widget
 {
     protected function getCards(): array
     {
@@ -27,7 +27,9 @@ class TimeStatsOverview extends BaseWidget
             Card::make('Time Worked Last Week', '00h 00m')
                 ->description($last_week),
             Card::make('Time Worked This Month', '00h 00m')
-                ->description(\Carbon\Carbon::today()->isoFormat('MMM, YYYY')),
+                ->description(\Carbon\Carbon::today()->isoFormat('MMM, YYYY'))
+                ->chart([4, 5, 3, 7, 9, 8, 2, 9])
+                ->color('success'),
         ];
     }
 }
