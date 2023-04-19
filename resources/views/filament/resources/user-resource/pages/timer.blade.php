@@ -9,35 +9,45 @@
 			</div>
 		</div>
 		<div class="text-right">
-			<p class="text-black-500 dark:text-white mr-2">Total Worked Today: <b id="totalWorkedToday">00:00:00</b></p>
+			<p class="text-black-500 dark:text-white mr-2">Total Worked Today: 
+                <b id="totalWorkedToday">
+                    {{ $totalTimeLog }}
+                </b>
+            </p>
 		</div>		
 	</div>
 
     <div class="border-t border-gray-300 my-4"></div>
 
     <ul id="task-list-item" class="bg-white border border-gray-200 divide-y divide-gray-200 dark:bg-gray-800 dark:border-gray-700">
-    	@foreach ($tasks as $task)
-    	    <li class="py-4 px-4 flex dark:hover:bg-gray-500/10" id="{{ $task['id'] }}">
-    	        <div class="flex items-center mr-4">
-    	            <x-tabler-drag-drop-2 class="h-5 w-5 text-gray-400 cursor-move" style="cursor: grab!important" />
-    	        </div>
-    	        <div class="flex-1">
-    	            <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $task['title'] }}</h4>
-    	            <p class="text-gray-500 dark:text-white pr-1">{{ $task['description'] }}</p>
-    	        </div>
-    	        <div class="flex items-center">
-    	            <div wire:ignore>
-    	                @if(isset($task['previous_time']))
-	                        <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $task['id'] }}">{{ $task['previous_time'] }}</p>
-                        @else 
-                            <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $task['id'] }}">00:00:00</p>
-	                    @endif
-    	            </div>
-    	            <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" data-id="{{ $task['id'] }}" id="timerBtn_{{ $task['id'] }}">
-    	                <x-heroicon-o-play class="h-7 w-7 dark:text-white" />
-    	            </button>
-    	        </div>
-    	    </li>
+    	@foreach ($tasks as $task)            
+                <li class="py-4 px-4 flex dark:hover:bg-gray-500/10" id="{{ $task['id'] }}">
+                    <div class="flex items-center mr-4">
+                        <x-tabler-drag-drop-2 class="h-5 w-5 text-gray-400 cursor-move" style="cursor: grab!important" />
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $task['title'] }}</h4>
+                        <p class="text-gray-500 dark:text-white pr-1">{{ $task['description'] }}</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div wire:ignore>
+                            @if(!$task['prev_time_today'] == 0)
+                                @foreach ($task['prev_time_today'] as $timeLog)
+                                    @if(isset($timeLog['pivot']['prev_time_today']))
+                                        <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $task['id'] }}">{{ \Carbon\CarbonInterval::milliseconds($timeLog['pivot']['prev_time_today'])->cascade()->format('%H:%I:%S') }}</p>
+                                    @else 
+                                        <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $task['id'] }}">00:00:00</p>
+                                    @endif
+                                @endforeach  
+                            @else
+                                <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $task['id'] }}">00:00:00</p>
+                            @endif 
+                        </div>
+                        <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" data-id="{{ $task['id'] }}" id="timerBtn_{{ $task['id'] }}">
+                            <x-heroicon-o-play class="h-7 w-7 dark:text-white" />
+                        </button>
+                    </div>
+                </li>             	    
     	@endforeach
     </ul>
 
@@ -140,6 +150,8 @@
 							};
 							button.innerHTML = `<x-heroicon-o-pause class="h-7 w-7 dark:text-white" />`;
 
+                            storeTimeLog(id, elapsedTimes[id]);
+
 						} else {
 
 			        		// Pause the timer
@@ -151,7 +163,26 @@
 			        		// Update elapsed time
 							elapsedTimes[id] = timer.elapsed;
 							const totalElapsed = Object.values(elapsedTimes).reduce((acc, val) => acc + val, 0);
+
+                            storeTimeLog(id, timer.elapsed);
 						}
+
+                        function storeTimeLog(taskId, elapsed) {
+                            // Make an AJAX call to save the data
+                            $.ajax({
+                                url: "{{ route('task_time_log.store') }}",
+                                method: "POST",
+                                data: {
+                                    task_id: taskId,
+                                    user_id: "{{ Auth::id() }}",
+                                    prev_time_today: elapsed,
+                                    time_log: elapsed,
+                                    _token: "{{ csrf_token() }}"
+                                }
+                            }).fail(function(jqXHR, textStatus, errorThrown) {
+                                console.log(textStatus, errorThrown); // Handle any errors
+                            });
+                        } // end storeTimeLog  
 
 					}); 
 				});

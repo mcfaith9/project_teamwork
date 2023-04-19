@@ -43,4 +43,11 @@ class Task extends Model
                     ->withPivot('user_id')
                     ->select('users.name');
     }
+
+    public function timeLogs()
+    {
+        return $this->belongsToMany(User::class, 'task_time_log')
+                    ->withPivot(['prev_time_today', 'time_log'])
+                    ->withTimestamps();
+    }
 }

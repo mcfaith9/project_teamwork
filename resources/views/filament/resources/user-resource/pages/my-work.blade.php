@@ -38,43 +38,43 @@
 	    <div class="col-span-9">
 	        <ul class="border-gray-200 divide-y divide-gray-200 space-y-1">
 	            @foreach($taskWork as $work)
-	                <li class="flex items-center justify-between py-4 px-6 bg-white rounded-xl hover:bg-gray-100 dark:bg-gray-900">
+	                <li class="flex items-center justify-between py-4 px-6 bg-white rounded-xl hover:bg-gray-100">
 	                    <div class="flex items-center">
 	                        <div class="h-10 w-10 bg-gray-300 rounded-md mr-4"></div>
 	                        <div>
-	                            <p class="text-gray-900 font-medium dark:text-white">{{ $work->title }}</p>
+	                            <p class="text-gray-900 font-medium dark:text-black">{{ $work->title }}</p>
 	                        </div>
 	                    </div>
 	                    <div class="flex items-center space-x-2">
 	                        <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                            <x-tabler-arrow-up-right class="h-4 w-4" />
+	                            <x-tabler-arrow-up-right class="h-4 w-4 text-gray-800 dark:text-black" />
 	                        </button>
 	                        <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                            <x-heroicon-s-chat class="h-4 w-4" />       
+	                            <x-heroicon-s-chat class="h-4 w-4 text-gray-800 dark:text-black" />       
 	                        </button>
 	                        <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-	                            <x-tabler-eye class="h-4 w-4" />     
+	                            <x-tabler-eye class="h-4 w-4 text-gray-800 dark:text-black" />     
 	                        </button>
 
                             <button class="tooltip inline-block flex items-center" title="More Details..." onclick="toggleDetails({{ $work->id }})">
-                                <x-css-details-more class="h-5 w-5" />
+                                <x-css-details-more class="h-5 w-5 text-gray-800 dark:text-black" />
                             </button>
 
 	                        <div id="details_{{ $work->id }}" class="flex items-center justify-between space-x-2 hidden">
                                 <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                    <x-tabler-calendar-event class="h-4 w-4" />
+                                    <x-tabler-calendar-event class="h-4 w-4 text-gray-800 dark:text-black" />
                                 </button>
                                 <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                    <x-css-sand-clock class="h-4 w-4" />    
+                                    <x-css-sand-clock class="h-4 w-4 text-gray-800 dark:text-black" />    
                                 </button>
                                 <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                    <x-tabler-bell class="h-4 w-4" />     
+                                    <x-tabler-bell class="h-4 w-4 text-gray-800 dark:text-black" />     
                                 </button>
                                 <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                    <x-tabler-tag class="h-4 w-4" />     
+                                    <x-tabler-tag class="h-4 w-4 text-gray-800 dark:text-black" />     
                                 </button>
                                 <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                    <x-tabler-flag-3 class="h-4 w-4" />     
+                                    <x-tabler-flag-3 class="h-4 w-4 text-gray-800 dark:text-black" />     
                                 </button>
                                 <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                                     <span>0%</span>      

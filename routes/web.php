@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::post('/tasks/store-sequence', [Timer::class, 'storeSequence'])
     ->name('timer.store-sequence')
     ->middleware(['auth']);
+
+Route::post('/task_time_log', [Timer::class, 'storeTimeLog'])
+    ->name('task_time_log.store')
+    ->middleware(['auth']);
