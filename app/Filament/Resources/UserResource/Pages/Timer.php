@@ -107,9 +107,27 @@ class Timer extends Page
 
     public function storeTimeLog(Request $request)
     {
-        \DB::table('task_time_log')->updateOrInsert(
-            ['task_id' => $request->task_id, 'user_id' => $request->user_id],
-            ['prev_time_today' => $request->prev_time_today, 'time_log' => $request->time_log, 'created_at' => now(), 'updated_at' => now()]
-        );
+        $date = now()->format('Y-m-d');
+
+        $existingRecord = \DB::table('task_time_log')
+                            ->where('task_id', $request->task_id)
+                            ->where('user_id', $request->user_id)
+                            ->whereDate('created_at', $date)
+                            ->first();
+
+        if ($existingRecord) {
+            \DB::table('task_time_log')
+                ->where('id', $existingRecord->id)
+                ->update(['prev_time_today' => $request->time_log, 'time_log' => $request->time_log, 'updated_at' => now()]);
+        } else {
+            \DB::table('task_time_log')->insert([
+                'task_id' => $request->task_id,
+                'user_id' => $request->user_id,
+                'prev_time_today' => $request->prev_time_today,
+                'time_log' => $request->time_log,
+                'created_at' => $date,
+                'updated_at' => now()
+            ]);
+        }
     }
 }

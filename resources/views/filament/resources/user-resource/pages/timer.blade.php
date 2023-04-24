@@ -85,31 +85,41 @@
                 }
             });
 
+            // Get the search input element and all the list items in the task list
             const searchInput = document.getElementById("timerSearchTaskInput");
-			const listItems = document.querySelectorAll("#task-list-item li");
+            const listItems = document.querySelectorAll("#task-list-item li");
 
-			searchInput.addEventListener("input", (event) => {
-				const searchTerm = event.target.value.toLowerCase();
-				listItems.forEach((item) => {
-					const title = item.querySelector("h4").textContent.toLowerCase();
-					const description = item.querySelector("p").textContent.toLowerCase();
+            // Listen for input events on the search input
+            searchInput.addEventListener("input", (event) => {
+                // Get the search term entered by the user and convert it to lowercase
+                const searchTerm = event.target.value.toLowerCase();
+                
+                // Loop through all the list items
+                listItems.forEach((item) => {
+                    // Get the title and description of the current list item and convert them to lowercase
+                    const title = item.querySelector("h4").textContent.toLowerCase();
+                    const description = item.querySelector("p").textContent.toLowerCase();
 
-					if (title.indexOf(searchTerm) > -1 || description.indexOf(searchTerm) > -1) {
-						item.style.display = "flex";
-					} else {
-						item.style.display = "none";
-					}
-				});
-			});
+                    // If the search term is found in either the title or the description, show the list item
+                    if (title.indexOf(searchTerm) > -1 || description.indexOf(searchTerm) > -1) {
+                        item.style.display = "flex";
+                    } 
+                    // Otherwise, hide the list item
+                    else {
+                        item.style.display = "none";
+                    }
+                });
+            });
 
 			document.addEventListener("DOMContentLoaded", function() {
 				let timers = {};
 				let elapsedTimes = {};
 
-			  	// Listen for clicks on timer buttons
+			  	// Select all buttons with an id starting with "timerBtn_" and add a click event listener
 				document.querySelectorAll('[id^="timerBtn_"]').forEach(button => {
 					button.addEventListener('click', function() {
 
+                        // Get the data-id attribute from the clicked button
 						const id = button.getAttribute('data-id');
 						let timer = timers[id];
 
@@ -121,6 +131,8 @@
 							runningTimer.paused = true;
 							document.querySelector(`#timerBtn_${runningTimer.id}`).innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />  `;
 						}
+
+                        // If the timer doesn't exist or is paused, start it
 						if (!timer || timer.paused) {
 
 			        		// Get previous time in milliseconds and add it to the start time
@@ -128,29 +140,43 @@
     		                const previousTimeInMs = previousTime ? previousTime.split(':').reduce((acc, time) => (60 * acc) + +time, 0) * 1000 : 0;
     		                const start = timer && timer.elapsed ? new Date().getTime() - timer.elapsed : new Date().getTime() - previousTimeInMs;
     		                
+                            // Create a new timer object
 							timers[id] = {
 								id: id,
 								startTime: start,
 								timerId: setInterval(function() {
+
+                                    // Calculate elapsed time
 									const now = new Date().getTime();
 									const distance = now - start;
 									const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 									const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 									const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 									const timerEl = document.querySelector(`#timer${id}`);
+
 									timerEl.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
 			            			// Update elapsed time
 									elapsedTimes[id] = distance;
+
+                                    // Call AJAX function to store time log
+                                    storeTimeLog(id, elapsedTimes[id]);
+
+                                    // Calculate total elapsed time and update display
 									const totalElapsed = Object.values(elapsedTimes).reduce((acc, val) => acc + val, 0);
+
+                                    console.log(elapsedTimes);
 									const totalElapsedEl = document.querySelector('#totalWorkedToday');
+                                    totalElapsedEl.innerHTML = elapsedTimes;
 									totalElapsedEl.innerHTML = `${Math.floor(totalElapsed / (1000 * 60 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60)) / 1000).toString().padStart(2, '0')}`;
+
 								}, 1000),
 								paused: false,
 								elapsed: timer ? timer.elapsed : 0
 							};
-							button.innerHTML = `<x-heroicon-o-pause class="h-7 w-7 dark:text-white" />`;
 
-                            storeTimeLog(id, elapsedTimes[id]);
+                            // Change button icon to "pause"
+							button.innerHTML = `<x-heroicon-o-pause class="h-7 w-7 dark:text-white" />`;
 
 						} else {
 
@@ -186,8 +212,8 @@
 
 					}); 
 				});
+                //end
 			});
-
 			// end
         });
     </script>
