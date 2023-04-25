@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37888de1f1d7a7b97ca04256123ef84d",
+    "content-hash": "3b300d5a120da3e4210b357c1c6b7474",
     "packages": [
         {
             "name": "3x1io/filament-user",
@@ -2765,6 +2765,58 @@
                 "source": "https://github.com/khatabwedaa/blade-css-icons/tree/1.3.0"
             },
             "time": "2023-02-04T14:04:11+00:00"
+        },
+        {
+            "name": "koalafacade/filament-navigation-holder",
+            "version": "v0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KoalaFacade/Filament-Navigation-Holder.git",
+                "reference": "10d45f03856e3dfed1f1c3cb36f3f78351806a37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KoalaFacade/Filament-Navigation-Holder/zipball/10d45f03856e3dfed1f1c3cb36f3f78351806a37",
+                "reference": "10d45f03856e3dfed1f1c3cb36f3f78351806a37",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.6",
+                "phpstan/phpstan": "^1.10"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KoalaFacade\\FilamentNavigationHolder\\FilamentNavigationHolderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KoalaFacade\\FilamentNavigationHolder\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "pemudakoding",
+                    "email": "pemudakoding@gmail.com"
+                }
+            ],
+            "description": "A holder package for filament navigation scroll position",
+            "support": {
+                "issues": "https://github.com/KoalaFacade/Filament-Navigation-Holder/issues",
+                "source": "https://github.com/KoalaFacade/Filament-Navigation-Holder/tree/v0.0.0"
+            },
+            "time": "2023-03-14T11:07:42+00:00"
         },
         {
             "name": "lab404/laravel-impersonate",

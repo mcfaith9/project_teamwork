@@ -20,6 +20,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "jeffgreco13/filament-breezy": "^1.5",
         "khatabwedaa/blade-css-icons": "^1.3",
+        "koalafacade/filament-navigation-holder": "^0.0.0",
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",

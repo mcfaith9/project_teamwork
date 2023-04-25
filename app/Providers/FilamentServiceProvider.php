@@ -81,27 +81,32 @@ class FilamentServiceProvider extends ServiceProvider
                         ->items([
                             NavigationItem::make('Dashboard')
                                 ->url(route('filament.pages.dashboard'))
-                                ->icon('tabler-chart-treemap'),
+                                ->icon('tabler-chart-treemap')
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.dashboard')),
                             NavigationItem::make('Timer')
-                                ->url('/app/users/timer')
+                                ->url(route('filament.resources.users.timer'))
                                 ->icon('tabler-clock-hour-3')
                                 ->sort(2)
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.users.timer'))
                         ]),
 
                     NavigationGroup::make('Admin')
                         ->items([
                             NavigationItem::make('Users')
-                                ->url('/app/users')
+                                ->url(route('filament.resources.users.index'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.users.index'))
                                 ->icon('heroicon-o-user-group')
                                 ->sort(1),
 
                             NavigationItem::make('Roles')
-                                ->url('/app/shield/roles')
+                                ->url(route('filament.resources.shield/roles.index'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.shield/roles.index'))
                                 ->icon('heroicon-o-shield-check')
                                 ->sort(2),
 
                             NavigationItem::make('Task')
-                                ->url('/app/tasks')
+                                ->url(route('filament.resources.tasks.index'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.tasks.index'))
                                 ->icon('tabler-subtask')
                                 ->sort(3),   
                         ]),
@@ -109,16 +114,19 @@ class FilamentServiceProvider extends ServiceProvider
                     NavigationGroup::make('Tools')
                         ->items([
                             NavigationItem::make('Calendar | ' . \Carbon\Carbon::today()->isoFormat('dddd, D MMM'))
-                                ->url('/app/timex')
+                                ->url(route('filament.pages.timex'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.timex'))
                                 ->icon('timex-timex')
                                 ->sort(1),
 
                             NavigationItem::make('Events')
-                                ->url('/app/timex-events')
+                                ->url(route('filament.resources.timex-events.index'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.timex-events.index'))
                                 ->icon('heroicon-o-calendar')
                                 ->sort(2),
                             NavigationItem::make('Page Hints')
-                                ->url('/app/page-hints')
+                                ->url(route('filament.resources.page-hints.index'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.page-hints.index'))
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->sort(3)
                         ]),
@@ -129,16 +137,14 @@ class FilamentServiceProvider extends ServiceProvider
                             NavigationGroup::make('Timer')
                                 ->items([
                                         NavigationItem::make('TD')
-                                            ->url('/app/users/timer')
+                                            ->url(route('filament.resources.users.timer'))
+                                            ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.users.timer'))
                                             ->icon('tabler-list-details')
                                             ->sort(1),
-                                        NavigationItem::make('Teamwork')
-                                            ->url('#')
-                                            ->icon('tabler-list-details')
-                                            ->sort(2),
                                     ]),
                             NavigationItem::make('Time Dashboard')
-                                ->url('/app/time/dashboard')
+                                ->url(route('filament.pages.time/dashboard'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.time/dashboard'))
                                 ->icon('heroicon-o-chart-pie')
                                 ->sort(2),
                             NavigationItem::make('Edit Time')
@@ -160,11 +166,13 @@ class FilamentServiceProvider extends ServiceProvider
 
                             NavigationItem::make('Application Health')
                                 ->url(route('filament.pages.health-check-results'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.health-check-results'))
                                 ->icon('heroicon-o-heart')
                                 ->sort(1),
 
                             NavigationItem::make('Backups')
-                                ->url('/app/backups')
+                                ->url(route('filament.pages.backups'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.backups'))
                                 ->icon('tabler-brand-google-drive')
                                 ->sort(2),
                         ]),                    
