@@ -63,6 +63,11 @@ class FilamentServiceProvider extends ServiceProvider
         }, isImportant: true);
     }
 
+    /**
+     * Get the widgets that should be available in the dashboard.
+     *
+     * @return array
+     */
     public static function getWidgets(): array
     {
         return [
@@ -70,11 +75,15 @@ class FilamentServiceProvider extends ServiceProvider
         ];
     }
 
-
+    /**
+     * Customize the admin menu with additional items.
+     *
+     * @return array
+     */
     private function customAdminMenu()
     {
-        Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
-            return $builder                               
+        Filament::navigation(function (NavigationBuilder $items): NavigationBuilder {
+            return $items                               
                 ->groups([
 
                     NavigationGroup::make(null)
@@ -179,8 +188,6 @@ class FilamentServiceProvider extends ServiceProvider
                 ]);
         });
     }
-
-
 
     private function configureHealthCheck()
     {
