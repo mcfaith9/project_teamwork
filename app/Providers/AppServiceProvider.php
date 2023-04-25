@@ -5,6 +5,7 @@ namespace App\Providers;
 use Filament\Facades\Filament;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\HtmlString;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,9 +27,26 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {       
         Filament::registerRenderHook(
-            'global-search.start',
-            fn (): View => view('components/topbar-navigation-list'),
-        );  
+            name: 'global-search.start',
+            callback: fn (): View => view('components/topbar-navigation-list'),
+        );
+
+        Filament::registerRenderHook(
+            name: 'scripts.start',
+            callback: fn () => new HtmlString(html: "
+                <script>
+                    document.addEventListener('DOMContentLoaded', function(){
+                       setTimeout(() => {
+                            const activeSidebarItem = document.querySelector('.filament-sidebar-item-active');
+                            const sidebarWrapper = document.querySelector('.filament-sidebar-nav')
+                            
+                            sidebarWrapper.style.scrollBehavior = 'smooth';
+                            
+                            sidebarWrapper.scrollTo(0, activeSidebarItem.offsetTop - 250)
+                       }, 300)
+                    });
+                </script>
+            "));
 
         Filament::registerScripts([
             'https://code.iconify.design/2/2.2.1/iconify.min.js',
