@@ -132,12 +132,7 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->url(route('filament.resources.timex-events.index'))
                                 ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.timex-events.index'))
                                 ->icon('heroicon-o-calendar')
-                                ->sort(2),
-                            NavigationItem::make('Page Hints')
-                                ->url(route('filament.resources.page-hints.index'))
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.page-hints.index'))
-                                ->icon('heroicon-o-question-mark-circle')
-                                ->sort(3)
+                                ->sort(2),                            
                         ]),
 
                     NavigationGroup::make('Timedoctor')
@@ -184,6 +179,11 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.backup'))
                                 ->icon('tabler-brand-google-drive')
                                 ->sort(2),
+                            NavigationItem::make('Page Hints')
+                                ->url(route('filament.pages.hints'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.hints'))
+                                ->icon('heroicon-o-question-mark-circle')
+                                ->sort(3)
                         ]),                    
                 ]);
         });
