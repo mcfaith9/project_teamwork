@@ -3,7 +3,7 @@
     
     <div class="flex items-center justify-between">
         <div class="inline-flex">
-            <h2 class="filament-header-heading"> Reports </h2>
+            <h1 class="filament-header-heading font-medium"> Reports </h1>
         </div>
 
         <div class="flex items-center justify-end">
@@ -32,55 +32,25 @@
             <table class="w-full">
                 <thead>
                     <tr class="bg-gray-100 text-left">
-                        @foreach($thisWeek as $week)
-                        <th class="px-4 py-2 text-sm font-medium text-gray-500">{{ $week }}</th>
+                        @foreach($workData as $data)
+                            <th class="px-4 py-2 text-sm font-medium text-gray-500">
+                                {{ $data['date'] }}
+                            </th>
                         @endforeach
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="px-1 py-1 whitespace-nowrap">
-                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
-                                <div class="progress h-px" style="width: 50%"></div>
-                            </div>
-                            <p class="text-center text-sm text-gray-500">0h 00m</p>
-                        </td>
-                        <td class="px-1 py-1 whitespace-nowrap">
-                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
-                                <div class="progress h-px" style="width: 75%"></div>
-                            </div>
-                            <p class="text-center text-sm text-gray-500">0h 00m</p>
-                        </td>
-                        <td class="px-1 py-1 whitespace-nowrap">
-                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
-                                <div class="progress h-px" style="width: 30%"></div>
-                            </div>
-                            <p class="text-center text-sm text-gray-500">0h 00m</p>
-                        </td>
-                        <td class="px-1 py-1 whitespace-nowrap">
-                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
-                                <div class="progress h-px" style="width: 80%"></div>
-                            </div>
-                            <p class="text-center text-sm text-gray-500">0h 00m</p>
-                        </td>
-                        <td class="px-1 py-1 whitespace-nowrap">
-                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
-                                <div class="progress h-px" style="width: 20%"></div>
-                            </div>
-                            <p class="text-center text-sm text-gray-500">0h 00m</p>
-                        </td>
-                        <td class="px-1 py-1 whitespace-nowrap">
-                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
-                                <div class="progress h-px" style="width: 60%"></div>
-                            </div>
-                            <p class="text-center text-sm text-gray-500">0h 00m</p>
-                        </td>
-                        <td class="px-1 py-1 whitespace-nowrap">
-                            <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
-                                <div class="progress h-px" style="width: 90%"></div>
-                            </div>
-                            <p class="text-center text-sm text-gray-500">0h 00m</p>
-                        </td>
+                        @foreach($workData as $data)
+                            <td class="px-1 py-1 whitespace-nowrap">
+                                <div class="progress-bar mb-6 h-px w-full bg-neutral-200 dark:bg-neutral-600">
+                                    <div class="progress h-px" style="width: {{ $data['percentage'] }}"></div>
+                                </div>
+                                <p class="text-center text-sm text-gray-500">
+                                    {{ $data['value'] }}
+                                </p>
+                            </td>
+                        @endforeach                        
                     </tr>
                 </tbody>
             </table>
