@@ -174,14 +174,14 @@ class FilamentServiceProvider extends ServiceProvider
                         ->items([
 
                             NavigationItem::make('Application Health')
-                                ->url(route('filament.pages.health-check-results'))
+                                ->url(route('filament.pages.health-check'))
                                 ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.health-check-results'))
                                 ->icon('heroicon-o-heart')
                                 ->sort(1),
 
                             NavigationItem::make('Backups')
-                                ->url(route('filament.pages.backups'))
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.backups'))
+                                ->url(route('filament.pages.backup'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.backup'))
                                 ->icon('tabler-brand-google-drive')
                                 ->sort(2),
                         ]),                    
