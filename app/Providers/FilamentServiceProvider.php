@@ -167,23 +167,26 @@ class FilamentServiceProvider extends ServiceProvider
 
                     NavigationGroup::make('System')
                         ->items([
-
+                            NavigationItem::make('Settings')
+                                ->url(route('filament.pages.theme-settings'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.theme-settings'))
+                                ->icon('heroicon-s-cog')
+                                ->sort(1),
                             NavigationItem::make('Application Health')
                                 ->url(route('filament.pages.health-check'))
                                 ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.health-check-results'))
                                 ->icon('heroicon-o-heart')
-                                ->sort(1),
-
+                                ->sort(2),
                             NavigationItem::make('Backups')
                                 ->url(route('filament.pages.backup'))
                                 ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.backup'))
                                 ->icon('tabler-brand-google-drive')
-                                ->sort(2),
+                                ->sort(3),
                             NavigationItem::make('Page Hints')
                                 ->url(route('filament.pages.hints'))
                                 ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.hints'))
                                 ->icon('heroicon-o-question-mark-circle')
-                                ->sort(3)
+                                ->sort(4),
                         ]),                    
                 ]);
         });
