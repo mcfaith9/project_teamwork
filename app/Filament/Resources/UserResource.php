@@ -130,6 +130,11 @@ class UserResource extends Resource
         return $table;
     }
 
+    /**
+    * This method returns an array of all the pages in the system.
+    *
+    * @return array An array of pages, where each page is represented as an associative array with the following keys:
+    */
     public static function getPages(): array
     {
         return [
