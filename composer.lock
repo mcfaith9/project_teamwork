@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37888de1f1d7a7b97ca04256123ef84d",
+    "content-hash": "785dcaf819a81e5b364b732e135ec029",
     "packages": [
         {
             "name": "3x1io/filament-user",
@@ -9810,6 +9810,64 @@
                 }
             ],
             "time": "2023-02-02T11:19:30+00:00"
+        },
+        {
+            "name": "yepsua/filament-themes",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yepsua/filament-themes.git",
+                "reference": "98cfcf51dd305a93f96ce70e999d4f635895cccb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yepsua/filament-themes/zipball/98cfcf51dd305a93f96ce70e999d4f635895cccb",
+                "reference": "98cfcf51dd305a93f96ce70e999d4f635895cccb",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.0",
+                "illuminate/contracts": "^8.0|^9.0|^10.0",
+                "php": "^8.0 | ^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Yepsua\\Filament\\Themes\\YepsuaFilamentThemesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Yepsua\\Filament\\Themes\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Omar Yepez",
+                    "email": "oyepez003@gmail.com"
+                }
+            ],
+            "description": "Manage filament themes from the config files",
+            "homepage": "https://github.com/z3d0x/filament-logger",
+            "keywords": [
+                "filament",
+                "laravel",
+                "themes"
+            ],
+            "support": {
+                "issues": "https://github.com/yepsua/filament-themes/issues",
+                "source": "https://github.com/yepsua/filament-themes/tree/v0.2.1"
+            },
+            "time": "2023-02-16T14:31:37+00:00"
         },
         {
             "name": "z3d0x/filament-logger",

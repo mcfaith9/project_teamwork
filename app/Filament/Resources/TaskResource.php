@@ -105,15 +105,25 @@ class TaskResource extends Resource
                 FilamentExportHeaderAction::make('ExportXLSX')->defaultFormat('xlsx')->label('Export Excel')->button()->color('success'),
                 FilamentExportHeaderAction::make('ExportCSV')->defaultFormat('csv')->label('Export CSV')->button()->color('success'),
             ]);
-    }
+    }    
     
+    /**
+    * Returns an array of all the relations available in the system.
+    *
+    * @return array An array of relations, where each relation is represented as an associative array with the following keys:   
+    */
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
+    /**
+    * This method returns an array of all the pages in the system.
+    *
+    * @return array An array of pages, where each page is represented as an associative array with the following keys:
+    */
     public static function getPages(): array
     {
         return [

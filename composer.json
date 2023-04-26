@@ -34,6 +34,7 @@
         "spatie/laravel-health": "^1.22",
         "spatie/simple-excel": "^3.2",
         "stafe-group-ab/filament-bookmarks-menu": "^1.0",
+        "yepsua/filament-themes": "^0.2.1",
         "z3d0x/filament-logger": "^0.5.2"
     },
     "require-dev": {
