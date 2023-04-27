@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Filament\Resources\UserResource\Pages\Timer;
+use App\Filament\Pages\TaskView;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Store Task Sequence
+Route::get('/app/tasks/{id}', TaskView::class)
+    ->name('tasks.show')
+    ->middleware(['auth']);
+    
 Route::post('/tasks/store-sequence', [Timer::class, 'storeSequence'])
     ->name('timer.store-sequence')
     ->middleware(['auth']);
@@ -25,3 +29,4 @@ Route::post('/tasks/store-sequence', [Timer::class, 'storeSequence'])
 Route::post('/task_time_log', [Timer::class, 'storeTimeLog'])
     ->name('task_time_log.store')
     ->middleware(['auth']);
+

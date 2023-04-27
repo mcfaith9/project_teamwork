@@ -97,28 +97,7 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->icon('tabler-clock-hour-3')
                                 ->sort(2)
                                 ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.users.timer'))
-                        ]),
-
-                    NavigationGroup::make('Admin')
-                        ->items([
-                            NavigationItem::make('Users')
-                                ->url(route('filament.resources.users.index'))
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.users.index'))
-                                ->icon('heroicon-o-user-group')
-                                ->sort(1),
-
-                            NavigationItem::make('Roles')
-                                ->url(route('filament.resources.shield/roles.index'))
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.shield/roles.index'))
-                                ->icon('heroicon-o-shield-check')
-                                ->sort(2),
-
-                            NavigationItem::make('Task')
-                                ->url(route('filament.resources.tasks.index'))
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.tasks.index'))
-                                ->icon('tabler-subtask')
-                                ->sort(3),   
-                        ]),
+                        ]),                    
 
                     NavigationGroup::make('Tools')
                         ->items([
@@ -163,6 +142,27 @@ class FilamentServiceProvider extends ServiceProvider
                                 ->url('#')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->sort(5),
+                        ]),
+
+                    NavigationGroup::make('Admin')
+                        ->items([
+                            NavigationItem::make('Users')
+                                ->url(route('filament.resources.users.index'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.users.index'))
+                                ->icon('heroicon-o-user-group')
+                                ->sort(1),
+
+                            NavigationItem::make('Roles')
+                                ->url(route('filament.resources.shield/roles.index'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.shield/roles.index'))
+                                ->icon('heroicon-o-shield-check')
+                                ->sort(2),
+
+                            NavigationItem::make('Task')
+                                ->url(route('filament.resources.tasks.index'))
+                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.resources.tasks.index'))
+                                ->icon('tabler-subtask')
+                                ->sort(3),   
                         ]),
 
                     NavigationGroup::make('System')

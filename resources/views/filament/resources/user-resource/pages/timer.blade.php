@@ -26,7 +26,9 @@
                         <x-tabler-drag-drop-2 class="h-5 w-5 text-gray-400 cursor-move" style="cursor: grab!important" />
                     </div>
                     <div class="flex-1">
-                        <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $task['title'] }}</h4>
+                        <a href="{{ url('/app/tasks/' . $task['id']) }}" target="_blanks">
+                            <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $task['title'] }}</h4>
+                        </a>
                         <p class="text-gray-500 dark:text-white pr-1">{{ $task['description'] }}</p>
                     </div>
                     <div class="flex items-center">
