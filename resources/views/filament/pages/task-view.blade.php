@@ -6,10 +6,11 @@
 
         <div class="border-t border-gray-300 mt-4"></div>
         <div class="flex flex-wrap mt-4">
+            <span class="font-bold mr-1">{{ __('Assigned to') }}: </span>
             @foreach($data['users'] as $user)
-                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-4 bg-gray-300">
+                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-300">
                     <div class="flex items-center">
-                        <x-heroicon-s-user class="text-gray-500 mr-2 w-4 h-4"/>
+                        <x-heroicon-s-user class="text-black-500 mr-2 w-4 h-4"/>
                         <span>{{ $user->name }}</span>
                     </div>
                 </span>
@@ -32,17 +33,60 @@
                     <x-tabler-flag-3 class="h-4 w-4 text-gray-800 dark:text-black" />     
                 </button>
                 <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                    <span>0%</span>      
+                    <span class="text-gray-800">1%</span>      
                 </button>
             </div>
         </div>
+    </div>      
+
+    <div class="px-4">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion ({{ count($comments) }})</h2>
+        </div>
+
+        <button wire:click="$toggle('showComments')" class="flex items-center space-x-1 text-sm font-medium text-blue-500 hover:text-blue-700">
+            <x-tabler-arrow-down class="w-4 h-4"/>
+            <span>{{ $showComments ? 'Hide' : 'Show' }} Comments</span>
+        </button>
+
+        <div x-data="{ showComments: @entangle('showComments').defer }" x-show="showComments" class="mt-4">
+            @foreach($comments as $comment)
+                <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-800">
+                    <footer class="flex justify-between items-center mb-2">
+                        <div class="flex items-center">
+                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                                <x-heroicon-s-user class="mr-2 w-6 h-6 rounded-full bg-gray-200"/>
+                                    {{ $comment->user->name }}
+                            </p>
+
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                <time>{{ $comment->created_at->format('F d, Y') }}</time>
+                            </p>
+                        </div>
+                        <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                            <x-tabler-dots class="w-4 h-4" />
+                            <span class="sr-only">Comment settings</span>
+                        </button>
+                    </footer>
+                    <p class="text-gray-500 dark:text-gray-400">{{ $comment->body }}</p>
+
+                    <div class="flex items-center mt-4 space-x-4">
+                        <a href="#comment-form" class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400">
+                            <x-heroicon-s-chat class="w-4 h-4 mr-2" /> Reply
+                        </a>
+                    </div>
+                </article>
+            @endforeach
+        </div>
     </div>
 
-    <div class="bg-white shadow-lg rounded-lg px-6 py-4 dark:bg-gray-800">       
+
+    <div id="comment-form" class="bg-white shadow-lg rounded-lg px-4 py-4 dark:bg-gray-800">       
 
         <form class="mb-4" wire:submit.prevent="submit">
             {{ $this->form }}
-            <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline dark:bg-blue-700 dark:hover:bg-blue-900 dark:text-white dark:border-blue-700" type="submit">Submit</button>
+
+            <x-filament::button type="submit" class="mt-4">Submit</x-filament::button>
         </form>
     </div>
 

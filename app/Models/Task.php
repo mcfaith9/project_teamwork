@@ -44,6 +44,11 @@ class Task extends Model
                     ->select('users.name');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function timeLogs()
     {
         return $this->belongsToMany(User::class, 'task_time_log')
