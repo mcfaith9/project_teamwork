@@ -1,5 +1,30 @@
 <x-filament::page>
 
+    <style type="text/css">
+        pre {
+          background-color: #f5f5f5;
+          color: #333;
+          font-size: 14px;
+          font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+          padding: 10px;
+          border-radius: 4px;
+          overflow-x: auto;
+          margin-bottom: 15px;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+
+        blockquote {
+          margin: 0;
+          padding: 1rem;
+          background-color: #f5f5f5;
+          border-left: 4px solid #e2e8f0;
+          border-radius: 4px;
+          font-style: italic;
+          color: #718096;
+        }
+    </style>
+
     <div class="bg-white shadow-lg rounded-lg px-6 py-4 dark:bg-gray-800">
         <h2 class="text-2xl font-bold mb-2 dark:text-white">{{ $data['title'] }}</h2>
         <p class="text-gray-700 mb-4 dark:text-gray-300">{{ $data['description'] }}</p>
@@ -39,7 +64,7 @@
         </div>
     </div>      
 
-    <div class="px-4">
+    <div class="px-4">        
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion ({{ count($comments) }})</h2>
         </div>
@@ -67,15 +92,22 @@
                             <x-tabler-dots class="w-4 h-4" />
                             <span class="sr-only">Comment settings</span>
                         </button>
-                    </footer>                    
-                    <p class="text-gray-500 dark:text-gray-400">
+                    </footer>     
+
+                    <div class="ml-4">
                         {!! $comment->body !!}
-                    </p>
-                    @foreach(json_decode($comment->attachments) as $attachment)
-                        <img src="{{ asset($comment->image_url[$loop->index]) }}" alt="Attachment" class="object-cover object-center mx-2 my-4 rounded-md inline-flex dark:filter dark:grayscale dark:opacity-75" width="650">
-                    @endforeach
+                        
+                        @if(!empty($comment->attachments))
+                            <div class="text-center">
+                                @foreach(json_decode($comment->attachments) as $attachment)
+                                    <img src="{{ asset($comment->image_url[$loop->index]) }}" alt="Attachment" class="object-cover object-center mx-2 my-4 rounded-md inline-flex dark:filter dark:grayscale dark:opacity-75" style="max-width: 650px;">
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                    
                     <div class="flex items-center mt-4 space-x-4">
-                        <a href="#comment-form" class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400">
+                        <a href="#comment-form" class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 ml-auto">
                             <x-heroicon-s-chat class="w-4 h-4 mr-2" /> Reply
                         </a>
                     </div>
