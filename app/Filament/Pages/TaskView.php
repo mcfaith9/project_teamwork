@@ -15,7 +15,7 @@ class TaskView extends Page
     public $data;
     public $comments;
     public bool $showComments = true;
-
+    
     protected static string $view = 'filament.pages.task-view';
 
     public function mount($id) {        
@@ -33,7 +33,10 @@ class TaskView extends Page
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\MarkdownEditor::make('comment'),
+            Forms\Components\MarkdownEditor::make('comment')
+                ->fileAttachmentsDisk('local')
+                ->fileAttachmentsDirectory('attachments')
+                ->fileAttachmentsVisibility('private'),
         ];
     }
 

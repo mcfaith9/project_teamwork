@@ -56,9 +56,9 @@
                         <div class="flex items-center">
                             <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                                 <x-heroicon-s-user class="mr-2 w-6 h-6 rounded-full bg-gray-200"/>
-                                    {{ $comment->user->name }}
+                                {{ $comment->user->name }}
                             </p>
-
+                            
                             <p class="text-sm text-gray-600 dark:text-gray-400">
                                 <time>{{ $comment->created_at->format('F d, Y') }}</time>
                             </p>

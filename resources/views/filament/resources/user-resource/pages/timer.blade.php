@@ -27,7 +27,9 @@
                     </div>
                     <div class="flex-1">
                         <a href="{{ url('/app/tasks/' . $task['id']) }}" target="_blanks">
-                            <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $task['title'] }}</h4>
+                            <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ $task['title'] }}
+                                <x-tabler-external-link class="mb-2 inline-flex h-4 w-4 text-gray-400"/>
+                            </h4>
                         </a>
                         <p class="text-gray-500 dark:text-white pr-1">{{ $task['description'] }}</p>
                     </div>
