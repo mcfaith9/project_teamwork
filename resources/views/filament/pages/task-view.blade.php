@@ -2,26 +2,30 @@
 
     <style type="text/css">
         pre {
-          background-color: #f5f5f5;
-          color: #333;
-          font-size: 14px;
-          font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-          padding: 10px;
-          border-radius: 4px;
-          overflow-x: auto;
-          margin-bottom: 15px;
-          white-space: pre-wrap;
-          word-wrap: break-word;
+            /*background-color: #f5f5f5;
+            color: #333;*/
+            background-color: #1f2937;
+            border-radius: 0.375rem;
+            color: #e5e7eb;
+            font-size: .875em;
+            font-weight: 400;
+            line-height: 1.7142857;
+            margin-bottom: 1.7142857em;
+            overflow-x: auto;
+            padding: 0.8571429em 1.1428571em;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         blockquote {
-          margin: 0;
-          padding: 1rem;
-          background-color: #f5f5f5;
-          border-left: 4px solid #e2e8f0;
-          border-radius: 4px;
-          font-style: italic;
-          color: #718096;
+            margin: 0;
+            padding: 1rem;
+            background-color: #f5f5f5;
+            border-left: 4px solid #e2e8f0;
+            border-radius: 4px;
+            font-style: italic;
+            color: #718096;
         }
     </style>
 
@@ -64,7 +68,7 @@
         </div>
     </div>      
 
-    <div class="px-4">        
+    <section>        
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion ({{ count($comments) }})</h2>
         </div>
@@ -79,13 +83,12 @@
                 <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-800">
                     <footer class="flex justify-between items-center mb-2">
                         <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                                <x-heroicon-s-user class="mr-2 w-6 h-6 rounded-full bg-gray-200"/>
-                                {{ $comment->user->name }}
+                            <p class="inline-flex items-center mr-3 text-md text-gray-900 dark:text-white">
+                                <x-filament::user-avatar :user="$comment->user" class="mr-2 w-10 h-10" />
+                                <b>{{ $comment->user->name }}</b>
                             </p>
-                            
                             <p class="text-sm text-gray-600 dark:text-gray-400">
-                                <time>{{ $comment->created_at->format('F d, Y') }}</time>
+                                <time class="ml-2">{{ $comment->created_at->format('F d, Y') }}</time>
                             </p>
                         </div>
                         <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -107,14 +110,14 @@
                     </div>
                     
                     <div class="flex items-center mt-4 space-x-4">
-                        <a href="#comment-form" class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 ml-auto">
-                            <x-heroicon-s-chat class="w-4 h-4 mr-2" /> Reply
+                        <a href="#comment-form" class="flex items-center text-md text-gray-500 dark:text-gray-400 ml-auto">
+                            <x-heroicon-s-chat class="w-6 h-6 mr-2" />Reply
                         </a>
                     </div>
                 </article>
             @endforeach
         </div>
-    </div>
+    </section>
 
 
     <div id="comment-form" class="bg-white shadow-lg rounded-lg px-4 py-4 dark:bg-gray-800">       
