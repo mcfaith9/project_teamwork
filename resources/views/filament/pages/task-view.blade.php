@@ -49,7 +49,7 @@
             <span>{{ $showComments ? 'Hide' : 'Show' }} Comments</span>
         </button>
 
-        <div x-data="{ showComments: @entangle('showComments').defer }" x-show="showComments" class="mt-4">
+        <div x-data="{ showComments: @entangle('showComments').defer }" x-show="showComments" class="mt-4" wire:poll.2000s="refreshComments">
             @foreach($comments as $comment)
                 <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-800">
                     <footer class="flex justify-between items-center mb-2">
@@ -67,9 +67,13 @@
                             <x-tabler-dots class="w-4 h-4" />
                             <span class="sr-only">Comment settings</span>
                         </button>
-                    </footer>
-                    <p class="text-gray-500 dark:text-gray-400">{{ $comment->body }}</p>
-
+                    </footer>                    
+                    <p class="text-gray-500 dark:text-gray-400">
+                        {!! $comment->body !!}
+                    </p>
+                    @foreach(json_decode($comment->attachments) as $attachment)
+                        <img src="{{ asset($comment->image_url[$loop->index]) }}" alt="Attachment" class="object-cover object-center mx-2 my-4 rounded-md inline-flex dark:filter dark:grayscale dark:opacity-75" width="650">
+                    @endforeach
                     <div class="flex items-center mt-4 space-x-4">
                         <a href="#comment-form" class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400">
                             <x-heroicon-s-chat class="w-4 h-4 mr-2" /> Reply

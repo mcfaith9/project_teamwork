@@ -9,7 +9,23 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['body'];
+    protected $fillable = ['id', 'user_id', 'task_id', 'body'];
+    protected $appends = ['image_url'];
+    protected $casts = ['attachments' => 'array'];
+
+    public function getImageUrlAttribute()
+    {
+        if (!empty($this->attachments)) {
+            $attachmentPaths = json_decode($this->attachments);
+            $urls = [];
+            foreach ($attachmentPaths as $attachment) {
+                $urls[] = asset('storage/' . $attachment);
+            }
+            return $urls;
+        }
+
+        return null;
+    }
 
     public function task()
     {

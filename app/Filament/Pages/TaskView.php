@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use Filament\Pages\Page;
 use Filament\Forms;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use App\Models\Comment;
 use App\Models\Task;
@@ -33,11 +34,24 @@ class TaskView extends Page
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\MarkdownEditor::make('comment')
-                ->fileAttachmentsDisk('local')
-                ->fileAttachmentsDirectory('attachments')
-                ->fileAttachmentsVisibility('private'),
+            Forms\Components\RichEditor::make('comment')
+                ->disableToolbarButtons([
+                    'attachFiles',
+                    'h2',
+                    'h3',
+                ]),
+            Forms\Components\FileUpload::make('attachments')
+                ->preserveFilenames()
+                ->enableDownload()
+                ->enableOpen()   
+                ->multiple(),
         ];
+    }
+
+    public function refreshComments()
+    {
+        $id = $this->data->id;
+        $this->comments = Comment::where('task_id', $id)->with('user')->get();
     }
 
     public function submit(): void 
@@ -48,11 +62,22 @@ class TaskView extends Page
             'body' => $this->form->getState()['comment'],
         ]);
 
-        $comment->user_id = auth()->id();
+        // Handle uploaded images
+        $attachments = $this->form->getState()['attachments'];
 
+        $attachmentPaths = [];
+
+        foreach ($attachments as $attachment) {
+            $path = Storage::disk('local')->put($attachment, 'files');
+            $attachmentPaths[] = $attachment;
+        }
+
+        $comment->attachments = json_encode($attachmentPaths);
+        $comment->user_id = auth()->id();
         $task->comments()->save($comment);
 
         $this->form->fill();
-        $this->notify('success', 'Comment added successfully!');       
-    } 
+        $this->notify('success', 'Comment added successfully!');
+        $this->refreshComments();       
+    }
 }
