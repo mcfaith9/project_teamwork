@@ -37,9 +37,9 @@
         <div class="flex flex-wrap mt-4">
             <span class="font-bold mr-1">{{ __('Assigned to') }}: </span>
             @foreach($data['users'] as $user)
-                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-300">
+                <span class="inline-block rounded-full p-2 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-300">
                     <div class="flex items-center">
-                        <x-heroicon-s-user class="text-black-500 mr-2 w-4 h-4"/>
+                        <x-filament::user-avatar :user="$user" class="text-black-500 mr-1 w-5 h-5"/>
                         <span>{{ $user->name }}</span>
                     </div>
                 </span>
@@ -88,13 +88,21 @@
                                 <b>{{ $comment->user->name }}</b>
                             </p>
                             <p class="text-sm text-gray-600 dark:text-gray-400">
-                                <time class="ml-2">{{ $comment->created_at->format('F d, Y') }}</time>
+                                <time class="ml-2"> commented on {{ $comment->created_at->diffForHumans() }}</time>
                             </p>
                         </div>
-                        <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                            <x-tabler-dots class="w-4 h-4" />
-                            <span class="sr-only">Comment settings</span>
-                        </button>
+
+                        <div class="flex">
+                            <a href="#comment-form" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                                <x-css-mail-reply class="w-6 h-6" />
+                                <span class="sr-only">Comment settings</span>
+                            </a>
+                            <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                                <x-tabler-dots class="w-6 h-6" />
+                                <span class="sr-only">Comment settings</span>
+                            </button>
+                        </div>
+
                     </footer>     
 
                     <div class="ml-4">
@@ -108,24 +116,17 @@
                             </div>
                         @endif
                     </div>
-                    
-                    <div class="flex items-center mt-4 space-x-4">
-                        <a href="#comment-form" class="flex items-center text-md text-gray-500 dark:text-gray-400 ml-auto">
-                            <x-heroicon-s-chat class="w-6 h-6 mr-2" />Reply
-                        </a>
-                    </div>
                 </article>
             @endforeach
         </div>
     </section>
-
 
     <div id="comment-form" class="bg-white shadow-lg rounded-lg px-4 py-4 dark:bg-gray-800">       
 
         <form class="mb-4" wire:submit.prevent="submit">
             {{ $this->form }}
 
-            <x-filament::button type="submit" class="mt-4">Submit</x-filament::button>
+            <x-filament::button type="submit" class="mt-4">Comment</x-filament::button>
         </form>
     </div>
 

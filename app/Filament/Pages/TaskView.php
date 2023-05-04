@@ -4,12 +4,13 @@ namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
 use Filament\Forms;
+use Filament\Forms\ComponentContainer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Comment;
 use App\Models\Task;
-use Filament\Forms\ComponentContainer;
 
 class TaskView extends Page
 {
@@ -18,6 +19,11 @@ class TaskView extends Page
     public bool $showComments = true;
     
     protected static string $view = 'filament.pages.task-view';
+
+    protected function getHeading(): string
+    {
+        return 'View Task';
+    }     
 
     public function mount($id) {        
         // Use the $id parameter to fetch the task data

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Task extends Model
 {
@@ -54,5 +56,10 @@ class Task extends Model
         return $this->belongsToMany(User::class, 'task_time_log')
                     ->withPivot(['user_id','prev_time_today', 'time_log'])
                     ->withTimestamps();
+    }
+
+    public function attribute(): HasOne
+    {
+        return $this->hasOne(TaskAttribute::class);
     }
 }
