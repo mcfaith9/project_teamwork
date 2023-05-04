@@ -10,6 +10,19 @@ class TaskAttribute extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+    
+    protected $fillable = [
+        'task_id',
+        'progress',
+        'tag',
+        'flag',
+        'reminder',
+        'start_date',
+        'due_data',
+        'estimate',
+    ];
+
     public function task(): BelongsTo
     {
         return $this->belongsTo(Task::class);

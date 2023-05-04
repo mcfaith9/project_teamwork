@@ -17,7 +17,8 @@ class TaskView extends Page
     public $data;
     public $comments;
     public bool $showComments = true;
-    
+    public $progressValue = 0;
+
     protected static string $view = 'filament.pages.task-view';
 
     protected function getHeading(): string
@@ -85,5 +86,29 @@ class TaskView extends Page
         $this->form->fill();
         $this->notify('success', 'Comment added successfully!');
         $this->refreshComments();       
+    }
+
+    public function selectedTaskFlag($value)
+    {
+        $task = Task::find($this->data->id);
+
+        $taskAttributeData = [
+            'flag' => $value,
+        ];
+
+        $this->notify('success', 'Flag set to'. $value);
+        $task->attribute()->updateOrCreate([], $taskAttributeData);
+    }
+
+    public function selectedProgressValue()
+    {
+        $task = Task::find($this->data->id);
+
+        $taskAttributeData = [
+            'progress' => $this->progressValue,
+        ];        
+
+        $task->attribute()->updateOrCreate([], $taskAttributeData);
+        $this->notify('success', 'Progress set to '.$this->progressValue.'%');
     }
 }

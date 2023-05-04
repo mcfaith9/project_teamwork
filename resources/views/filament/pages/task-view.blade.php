@@ -37,10 +37,10 @@
         <div class="flex flex-wrap mt-4">
             <span class="font-bold mr-1">{{ __('Assigned to') }}: </span>
             @foreach($data['users'] as $user)
-                <span class="inline-block rounded-full p-2 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-300">
+                <span class="inline-block rounded-full p-2 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-300 dark:bg-gray-700">
                     <div class="flex items-center">
                         <x-filament::user-avatar :user="$user" class="text-black-500 mr-1 w-5 h-5"/>
-                        <span>{{ $user->name }}</span>
+                        <span>{{ __($user->name) }}</span>
                     </div>
                 </span>
             @endforeach
@@ -58,12 +58,10 @@
                 <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                     <x-tabler-tag class="h-4 w-4 text-gray-800 dark:text-black" />     
                 </button>
-                <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                    <x-tabler-flag-3 class="h-4 w-4 text-gray-800 dark:text-black" />     
-                </button>
-                <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                    <span class="text-gray-800">1%</span>      
-                </button>
+
+                @include('components.flag')
+
+                @include('components.progress-button')
             </div>
         </div>
     </div>      
@@ -109,7 +107,7 @@
                         {!! $comment->body !!}
                         
                         @if(!empty($comment->attachments))
-                            <div class="text-center">
+                            <div class="text-center mt-4">
                                 @foreach(json_decode($comment->attachments) as $attachment)
                                     <img src="{{ asset($comment->image_url[$loop->index]) }}" alt="Attachment" class="object-cover object-center mx-2 my-4 rounded-md inline-flex dark:filter dark:grayscale dark:opacity-75" style="max-width: 650px;">
                                 @endforeach
