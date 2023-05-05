@@ -5,22 +5,26 @@
     
     <div class="absolute z-10 right-0 mt-2 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5" x-show="open" @click.away="open = false">
         <div class="bg-white rounded-md p-4 text-center" style="width: 15rem;">
-            <p class="font-bold text-sm mb-2">Pick Start Date and Due Date</p>
-            <input id="datepicker{{ $this->id }}" class="border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md w-full py-2 px-3 mb-4 leading-tight" type="text" placeholder="Select Date Range" wire:onchange="$this->notify('success', 'Start Date and Due Date save successfully');">
+            <label class="font-bold text-sm mb-2 text-gray-900 dark:text-gray-800">Pick Start Date and Due Date</label>
+            <input id="datepicker{{ $this->id }}" class="border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md w-full py-2 px-3 mb-4 leading-tight text-gray-900 dark:text-gray-800" type="text" placeholder="Select Date Range">
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
 <script>
-    const range = new easepick.create({
+    //start Daterange
+    const rangePicker = new easepick.create({
         element: document.getElementById('datepicker{{ $this->id }}'),
         css: [
             'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
         ],
-        plugins: ['RangePlugin'],
-        setup(range) {
-            range.on('select', (e) => {
+        plugins: ['RangePlugin', 'LockPlugin'],
+        LockPlugin: {
+            // minDate: new Date(),
+        },
+        setup(rangePicker) {
+            rangePicker.on('select', (e) => {
                 let start = e.detail.start;
                 let end = e.detail.end;
                 $.ajax({
@@ -41,5 +45,6 @@
 
     let start_date = "{{ $data->attribute()->pluck('start_date')->first() }}";
     let due_date = "{{ $data->attribute()->pluck('due_date')->first() }}";
-    range.setDateRange(start_date, due_date);
+    rangePicker.setDateRange(start_date, due_date);
+    //end Daterange
 </script>
