@@ -21,7 +21,11 @@ Route::get('/', function () {
 Route::get('/app/tasks/{id}', TaskView::class)
     ->name('tasks.show')
     ->middleware(['auth']);
-    
+
+Route::post('/task-attribute/update-date-range', [TaskView::class, 'storeSelectedDateRange'])
+    ->name('task.attribute.store-date-range')
+    ->middleware(['auth']);
+
 Route::post('/tasks/store-sequence', [Timer::class, 'storeSequence'])
     ->name('timer.store-sequence')
     ->middleware(['auth']);
@@ -29,4 +33,6 @@ Route::post('/tasks/store-sequence', [Timer::class, 'storeSequence'])
 Route::post('/task_time_log', [Timer::class, 'storeTimeLog'])
     ->name('task_time_log.store')
     ->middleware(['auth']);
+
+
 

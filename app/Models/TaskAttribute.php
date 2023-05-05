@@ -19,7 +19,7 @@ class TaskAttribute extends Model
         'flag',
         'reminder',
         'start_date',
-        'due_data',
+        'due_date',
         'estimate',
     ];
 
