@@ -5,7 +5,7 @@
     
     <div class="absolute z-10 right-0 mt-2 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5" x-show="open" @click.away="open = false">
         <div class="bg-white rounded-md p-4 text-center" style="width: 15rem;">
-            <label class="font-bold text-sm mb-2 text-gray-900 dark:text-gray-800">Pick Start Date and Due Date</label>
+            <label class="block mb-2 text-sm font-medium text-center text-gray-900 dark:text-gray-800">Pick Start Date and Due Date</label>
             <input id="datepicker{{ $this->id }}" class="border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md w-full py-2 px-3 mb-4 leading-tight text-gray-900 dark:text-gray-800" type="text" placeholder="Select Date Range">
         </div>
     </div>
