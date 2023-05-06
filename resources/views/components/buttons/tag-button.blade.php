@@ -28,18 +28,16 @@
     <div class="absolute z-10 right-0 mt-2 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5" x-show="open" @click.away="open = false">
         <div class="py-2 px-2">
             <label class="px-3 block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Set tags</label>
-            <select wire:model="tag" wire:change.prevent="attachSelectedTag" id="task_tags" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" style="width: 15rem;">
+            <select id="task_tags" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" style="width: 15rem;">
                 @foreach ($statuses as $value => $text)
-                    <option value="{{ $value }}">{{ $text }}</option>
+                    <option value="{{ $value }}" @if($value == $tag) selected @endif>{{ $text }}</option>
                 @endforeach
             </select>
         </div>
     </div>
 </div>
 
-
-
-{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script type="text/javascript">
     const colorMap = {
@@ -86,7 +84,6 @@
     }).on('change', function (e) {
         @this.set('tag', $(this).val());
         @this.call('attachSelectedTag');
-        return false;
     });
 
     // Add @click.stop modifier to prevent event from bubbling up to button
@@ -95,4 +92,4 @@
             e.stopPropagation();
         });
     });   
-</script> --}}
+</script>

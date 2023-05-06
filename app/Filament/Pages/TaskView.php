@@ -38,6 +38,7 @@ class TaskView extends Page
         $this->task = $task;
         $this->task_id = $id;
         $this->data = $task;
+        $this->tag = $task->attribute()->pluck('tag')->first();
         $this->form->fill();
 
         // Fetch the comments for this task
@@ -122,7 +123,7 @@ class TaskView extends Page
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
     }
 
-    public function storeEstimateTime()
+    public function storeEstimateTime(): void 
     {
         $taskAttributeData = [
             'estimate' => $this->estimateTime,
@@ -130,6 +131,7 @@ class TaskView extends Page
 
         $this->notify('success', 'Estimated time '.$this->estimateTime);
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+        $this->redirect(route('tasks.show', $this->task->id));
     }
 
     public function attachSelectedTag()
@@ -140,6 +142,7 @@ class TaskView extends Page
 
         $this->notify('success', 'Tag  '.$this->tag.' Successfully attached');
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+        $this->redirect(route('tasks.show', $this->task->id));
     }
 
     public function storeSelectedDateRange(Request $request)

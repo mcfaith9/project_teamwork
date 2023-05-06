@@ -15,13 +15,17 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
-    $("#estimate{{ $this->id }}").flatpickr({
+    document.getElementById("estimate{{ $this->id }}").flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "h:i K",
         time_24hr: false,
         static: true,
+        confirmText: "OK ",
+        showAlways: false,
         onClose: function(selectedDates, dateStr, instance) {
+            @this.set('estimateTime', dateStr);
+            @this.call('storeEstimateTime');
             console.log("The date/time has been selected: " + dateStr);
         }
     });
