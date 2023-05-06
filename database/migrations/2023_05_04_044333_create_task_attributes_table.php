@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('reminder')->nullable();
             $table->date('start_date')->nullable();
             $table->date('due_date')->nullable();
-            $table->integer('estimate')->nullable();
+            $table->string('estimate')->nullable();
         });
     }
 

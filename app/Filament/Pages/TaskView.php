@@ -20,6 +20,8 @@ class TaskView extends Page
     public $comments;
     public bool $showComments = true;
     public $progressValue = 0;
+    public $estimateTime;
+    public $tag;
 
     protected static string $view = 'filament.pages.task-view';
 
@@ -117,6 +119,26 @@ class TaskView extends Page
         ];
 
         $this->notify('success', 'Reminder set to '.$text);
+        $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+    }
+
+    public function storeEstimateTime()
+    {
+        $taskAttributeData = [
+            'estimate' => $this->estimateTime,
+        ];
+
+        $this->notify('success', 'Estimated time '.$this->estimateTime);
+        $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+    }
+
+    public function attachSelectedTag()
+    {
+        $taskAttributeData = [
+            'tag' => $this->tag,
+        ];
+
+        $this->notify('success', 'Tag  '.$this->tag.' Successfully attached');
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
     }
 

@@ -21,5 +21,8 @@
         dateFormat: "h:i K",
         time_24hr: false,
         static: true,
+        onClose: function(selectedDates, dateStr, instance) {
+            console.log("The date/time has been selected: " + dateStr);
+        }
     });
 </script>
