@@ -1,6 +1,6 @@
 <div x-data="{ open: false, value: {{ $data->attribute()->pluck('progress')->first() ?? 0 }} }">
     <div class="relative">
-        <button @click="open = !open" class="text-sm font-semibold flex items-center text-gray-800 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+        <button @click="open = !open" class="text-sm font-semibold text-gray-800 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
             <span x-text="value + '%'"></span>  
         </button>
         <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">

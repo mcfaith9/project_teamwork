@@ -22,12 +22,12 @@
     }
 @endphp
 
-<div x-data="{ open: false }">
-    <button @click="open = !open" class="{{ $bgClass }} flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full flex items-center justify-center">
+<div x-data="{ open: false }" class="relative">
+    <button @click="open = !open" class="{{ $bgClass }} text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full flex items-center justify-center">
         <x-tabler-flag-3 class="h-4 w-4 {{ $textClass }} dark:text-black" />     
     </button>
-    <div x-show="open" @click.away="open = false" class="absolute mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+    <div x-show="open" @click.away="open = false" class="absolute z-10 right-0 mt-2 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5" >
+        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu" style="width: 8rem;">
             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" wire:click.prevent="selectedTaskFlag('High')">
                 <x-tabler-flag-3 class="inline-flex items-center p-1 bg-danger-500 rounded-full h-6 w-6 mr-2 text-white" />High
             </a>
