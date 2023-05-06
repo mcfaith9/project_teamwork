@@ -110,6 +110,16 @@ class TaskView extends Page
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);        
     }    
 
+    public function selectedReminder($text, $date_value)
+    {
+        $taskAttributeData = [
+            'reminder' => $date_value,
+        ];
+
+        $this->notify('success', 'Reminder set to '.$text);
+        $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+    }
+
     public function storeSelectedDateRange(Request $request)
     {
         $id = $request->input('id');
