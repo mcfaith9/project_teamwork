@@ -19,9 +19,10 @@ class TaskView extends Page
     public $data;
     public $comments;
     public bool $showComments = true;
-    public $progressValue = 0;
-    public $estimateTime;
-    public $tag;
+    public int $progressValue = 0;
+    public string $estimateTime;
+    public string $tag;
+    public $start, $end;
 
     protected static string $view = 'filament.pages.task-view';
 
@@ -145,20 +146,15 @@ class TaskView extends Page
         $this->redirect(route('tasks.show', $this->task->id));
     }
 
-    public function storeSelectedDateRange(Request $request)
+    public function storeSelectedDateRange()
     {
-        $id = $request->input('id');
-        $start = $request->input('start');
-        $end = $request->input('end');
-
-        $task = Task::find($id);
-
         $taskAttributeData = [
-            'start_date' => $start,
-            'due_date' => $end,
+            'start_date' => $this->start,
+            'due_date' => $this->end,
         ];        
 
         $this->notify('success', 'Start Date and Due Date save successfully');
-        $task->attribute()->updateOrCreate([], $taskAttributeData); 
+        $this->task->attribute()->updateOrCreate([], $taskAttributeData); 
+        $this->redirect(route('tasks.show', $this->task->id));
     }
 }

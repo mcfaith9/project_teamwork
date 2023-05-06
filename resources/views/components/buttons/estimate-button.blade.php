@@ -26,7 +26,6 @@
         onClose: function(selectedDates, dateStr, instance) {
             @this.set('estimateTime', dateStr);
             @this.call('storeEstimateTime');
-            console.log("The date/time has been selected: " + dateStr);
         }
     });
 </script>

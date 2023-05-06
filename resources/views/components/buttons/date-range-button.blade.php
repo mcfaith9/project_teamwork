@@ -27,18 +27,10 @@
             rangePicker.on('select', (e) => {
                 let start = e.detail.start;
                 let end = e.detail.end;
-                $.ajax({
-                    url: "{{ route('task.attribute.store-date-range') }}",
-                    method: "POST",
-                    data: {   
-                        id: {{ $this->data->id }},                     
-                        start: start.format('YYYY-MM-DD'),
-                        end: end.format('YYYY-MM-DD'),
-                        _token: "{{ csrf_token() }}",
-                    }
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    console.log(textStatus, errorThrown);
-                });
+
+                @this.set('start', e.detail.start.format('YYYY-MM-DD'));
+                @this.set('end', e.detail.end.format('YYYY-MM-DD'));
+                @this.call('storeSelectedDateRange');
             });
         }
     });
