@@ -47,17 +47,8 @@
 
             <div class="flex items-center space-x-2 ml-auto">
                 
-                @include('components.date-range-button')
-
-                @include('components.estimate-button')
+                @include('components.task-attribute-buttons')
                 
-                @include('components.reminder-button')
-                
-                @include('components.tag-button')
-
-                @include('components.flag')
-
-                @include('components.progress-button')
             </div>
         </div>
     </div>      
