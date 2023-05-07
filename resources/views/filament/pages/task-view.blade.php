@@ -64,7 +64,7 @@
 
         <div x-data="{ showComments: @entangle('showComments').defer }" x-show="showComments" class="mt-4" wire:poll.2000s="refreshComments">
             @foreach($comments as $comment)
-                <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-800">
+                <article class="p-6 mb-6 text-base rounded-lg dark:bg-gray-800">
                     <footer class="flex justify-between items-center mb-2">
                         <div class="flex items-center">
                             <p class="inline-flex items-center text-md text-gray-900 dark:text-white">
@@ -77,12 +77,12 @@
                         </div>
 
                         <div class="flex">
-                            <a href="#comment-form" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                                <x-css-mail-reply class="w-6 h-6" />
+                            <a href="#comment-form" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-100 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                                <x-css-mail-reply class="w-6 h-6 text-gray-500 " />
                                 <span class="sr-only">Comment settings</span>
                             </a>
-                            <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                                <x-tabler-dots class="w-6 h-6" />
+                            <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-100 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                                <x-tabler-dots class="w-6 h-6 text-gray-500 " />
                                 <span class="sr-only">Comment settings</span>
                             </button>
                         </div>
