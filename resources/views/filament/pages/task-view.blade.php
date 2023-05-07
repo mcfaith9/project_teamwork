@@ -33,35 +33,31 @@
         <h2 class="text-2xl font-bold mb-2 dark:text-white">{{ $data['title'] }}</h2>
         <p class="text-gray-700 mb-4 dark:text-gray-300">{{ $data['description'] }}</p>
 
-        <div class="py-4">
+        <div class="border-t border-gray-300 mt-4"></div>
+        <div class="flex flex-wrap mt-4">
+            <span class="font-semibold mr-3 italic text-sm">{{ __('Assigned to') }}: </span>
             @foreach($data['users'] as $user)
-                <span class="inline-block rounded-full p-2 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-300 dark:bg-gray-700">
+                <span class="inline-block rounded-full p-2 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-200 dark:bg-gray-700">
                     <div class="flex items-center">
                         <x-filament::user-avatar :user="$user" class="text-black-500 mr-1 w-5 h-5"/>
                         <span>{{ __($user->name) }}</span>
                     </div>
                 </span>
             @endforeach
-        </div>
 
-        <div class="border-t border-gray-300 mt-3"></div>
-        <div class="flex flex-wrap mt-4">
-
-            @include('components.subtask')
-
-            <div class="flex items-center space-x-2 absolute right-0" style="margin-right: 55px;">    
+            <div class="flex items-center space-x-2 ml-auto">    
                 @include('components.task-attribute-buttons')                
             </div>
-        </div>      
+        </div>  
+
+        @include('components.subtask')
     </div>      
 
-    <section x-data="{ open: true }">        
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion ({{ count($comments) }})</h2>
-        </div>
+    <section x-data="{ open: true }">
 
         <button @click="open = !open" wire:click="$toggle('showComments')" class="flex items-center space-x-1 text-sm font-medium text-blue-500 hover:text-blue-700">            
-            <span>{{ $showComments ? 'Hide' : 'Show' }} Comments</span>
+            <span class="font-semibold mr-1">Discussion ({{ count($comments) }})</span>
+            <span class="italic text-sm">{{ $showComments ? 'Hide' : 'Show' }} Comments</span>
             <x-tabler-arrow-up class="w-4 h-4" x-show="!open"/>
             <x-tabler-arrow-down class="w-4 h-4" x-show="open"/>
         </button>
@@ -71,12 +67,12 @@
                 <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-800">
                     <footer class="flex justify-between items-center mb-2">
                         <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-md text-gray-900 dark:text-white">
+                            <p class="inline-flex items-center text-md text-gray-900 dark:text-white">
                                 <x-filament::user-avatar :user="$comment->user" class="mr-2 w-10 h-10" />
                                 <b>{{ $comment->user->name }}</b>
                             </p>
                             <p class="text-sm text-gray-600 dark:text-gray-400">
-                                <time class="ml-2"> commented on {{ $comment->created_at->diffForHumans() }}</time>
+                                <time class="ml-2 italic text-sm"> commented on {{ $comment->created_at->diffForHumans() }}</time>
                             </p>
                         </div>
 
@@ -90,10 +86,9 @@
                                 <span class="sr-only">Comment settings</span>
                             </button>
                         </div>
-
                     </footer>     
 
-                    <div class="ml-4">
+                    <div class="ml-4" style="border-left: 4px solid #e2e8f0; padding: 1rem;">
                         {!! $comment->body !!}
                         
                         @if(!empty($comment->attachments))

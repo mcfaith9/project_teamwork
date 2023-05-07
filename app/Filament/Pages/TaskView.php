@@ -33,7 +33,7 @@ class TaskView extends Page
 
     public function mount($id) {        
         // Use the $id parameter to fetch the task data
-        $task = Task::with('users')->find($id);
+        $task = Task::with('users','subtasks')->find($id);
 
         // Pass the $task data to the view        
         $this->task = $task;
