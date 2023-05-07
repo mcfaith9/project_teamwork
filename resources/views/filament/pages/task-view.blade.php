@@ -47,6 +47,7 @@
 
             <div class="flex items-center space-x-2 ml-auto">
                 
+                @include('components.subtask')
                 @include('components.task-attribute-buttons')
                 
             </div>

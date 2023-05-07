@@ -37,25 +37,33 @@ class TaskResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->required(),
+                TextInput::make('title')
+                    ->required()
+                    ->autofocus(),
                 Forms\Components\MultiSelect::make('user_id')                    
                     ->label('Assigned to')
                     ->relationship('assignees','user_id')
                     ->multiple()
-                    ->options(User::pluck('name','id')->toArray()), 
-                Textarea::make('description')->required(),                               
+                    ->options(User::pluck('name','id')->toArray()),
+                DatePicker::make('due_date')
+                    ->label('Due Date')
+                    ->minDate(now()),
                 TextInput::make('creator_name')
-                    ->label('Creator')
+                    ->label('Created by')
                     ->default(auth()->user()->name)
                     ->disabled()
                     ->hint('Creator: '.auth()->user()->name)
                     ->hintIcon('tabler-info-circle'),
                 TextInput::make('creator_id')
                     ->default(auth()->user()->id)
-                    ->hidden(),                 
-                DatePicker::make('due_date')
-                    ->label('Due Date')
-                    ->minDate(now())
+                    ->hidden(),     
+                Textarea::make('description')->required(), 
+                Forms\Components\Repeater::make('subtask')
+                    // ->relationship('attribute')
+                    ->schema([
+                        // TextInput::make('tag')->required(),
+                    ])
+                    ->createItemButtonLabel('Add subtask')
             ]);
     }
 
