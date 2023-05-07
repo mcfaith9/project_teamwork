@@ -39,7 +39,7 @@ class TaskView extends Page
         $this->task = $task;
         $this->task_id = $id;
         $this->data = $task;
-        $this->tag = $task->attribute()->pluck('tag')->first();
+        $this->tag = $task->attribute()->pluck('tag')->first() ?? '';
         $this->form->fill();
 
         // Fetch the comments for this task

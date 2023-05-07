@@ -33,9 +33,7 @@
         <h2 class="text-2xl font-bold mb-2 dark:text-white">{{ $data['title'] }}</h2>
         <p class="text-gray-700 mb-4 dark:text-gray-300">{{ $data['description'] }}</p>
 
-        <div class="border-t border-gray-300 mt-4"></div>
-        <div class="flex flex-wrap mt-4">
-            <span class="font-bold mr-1">{{ __('Assigned to') }}: </span>
+        <div class="py-4">
             @foreach($data['users'] as $user)
                 <span class="inline-block rounded-full p-2 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-300 dark:bg-gray-700">
                     <div class="flex items-center">
@@ -44,24 +42,28 @@
                     </div>
                 </span>
             @endforeach
-
-            <div class="flex items-center space-x-2 ml-auto">
-                
-                @include('components.subtask')
-                @include('components.task-attribute-buttons')
-                
-            </div>
         </div>
+
+        <div class="border-t border-gray-300 mt-3"></div>
+        <div class="flex flex-wrap mt-4">
+
+            @include('components.subtask')
+
+            <div class="flex items-center space-x-2 absolute right-0" style="margin-right: 55px;">    
+                @include('components.task-attribute-buttons')                
+            </div>
+        </div>      
     </div>      
 
-    <section>        
+    <section x-data="{ open: true }">        
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion ({{ count($comments) }})</h2>
         </div>
 
-        <button wire:click="$toggle('showComments')" class="flex items-center space-x-1 text-sm font-medium text-blue-500 hover:text-blue-700">
-            <x-tabler-arrow-down class="w-4 h-4"/>
+        <button @click="open = !open" wire:click="$toggle('showComments')" class="flex items-center space-x-1 text-sm font-medium text-blue-500 hover:text-blue-700">            
             <span>{{ $showComments ? 'Hide' : 'Show' }} Comments</span>
+            <x-tabler-arrow-up class="w-4 h-4" x-show="!open"/>
+            <x-tabler-arrow-down class="w-4 h-4" x-show="open"/>
         </button>
 
         <div x-data="{ showComments: @entangle('showComments').defer }" x-show="showComments" class="mt-4" wire:poll.2000s="refreshComments">
