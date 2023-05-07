@@ -58,10 +58,12 @@ class TaskResource extends Resource
                     ->default(auth()->user()->id)
                     ->hidden(),     
                 Textarea::make('description')->required(), 
-                Forms\Components\Repeater::make('subtask')
-                    // ->relationship('attribute')
+                // for subtask
+                Forms\Components\Repeater::make('forSubtasks')
+                    ->relationship('subtasks')
                     ->schema([
-                        // TextInput::make('tag')->required(),
+                        TextInput::make('title')->required(),
+                        Textarea::make('description'),
                     ])
                     ->createItemButtonLabel('Add subtask')
             ]);

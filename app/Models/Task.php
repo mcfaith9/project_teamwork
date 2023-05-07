@@ -62,4 +62,9 @@ class Task extends Model
     {
         return $this->hasOne(TaskAttribute::class);
     }
+
+    public function subtasks()
+    {
+        return $this->hasMany(Subtask::class);
+    }
 }

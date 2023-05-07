@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
 
         Filament::registerScripts([
             'https://code.iconify.design/2/2.2.1/iconify.min.js',
-            // 'https://code.jquery.com/jquery-3.6.0.min.js',
+            'https://code.jquery.com/jquery-3.6.0.min.js',
         ], true);
     }
 }
