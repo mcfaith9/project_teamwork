@@ -47,7 +47,7 @@
                                 <p class="font-medium text-gray-500 dark:text-white mr-2" id="timer{{ $task['id'] }}">00:00:00</p>
                             @endif 
                         </div>
-                        <button class="rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" data-id="{{ $task['id'] }}" id="timerBtn_{{ $task['id'] }}">
+                        <button class="timer-button rounded-full bg-gray-200 text-gray-700 p-1 dark:bg-gray-900" data-id="{{ $task['id'] }}" id="timerBtn_{{ $task['id'] }}">
                             <x-heroicon-o-play class="h-7 w-7 dark:text-white" />
                         </button>
                     </div>
@@ -55,6 +55,7 @@
     	@endforeach
     </ul>
 
+    <script type="text/javascript" src="{{ asset('js/tasktimer.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
     <script>
         document.addEventListener('livewire:load', function () {
@@ -115,110 +116,105 @@
                 });
             });
 
-			document.addEventListener("DOMContentLoaded", function() {
-				let timers = {};
-				let elapsedTimes = {};
+            // Start Timer Logic (dirty approach)
+            const { TaskTimer } = tasktimer;
 
-			  	// Select all buttons with an id starting with "timerBtn_" and add a click event listener
-				document.querySelectorAll('[id^="timerBtn_"]').forEach(button => {
-					button.addEventListener('click', function() {
+            // Function to format duration in milliseconds as "HH:MM:SS"
+            function formatTime(milliseconds) {
+                const seconds = Math.floor(milliseconds / 1000);
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const remainingSeconds = seconds % 60;
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
 
-                        // Get the data-id attribute from the clicked button
-						const id = button.getAttribute('data-id');
-						let timer = timers[id];
+            // Get all timer buttons and initialize variables
+            const timerButtons = document.querySelectorAll('.timer-button');
+            let currentTimer;
+            let currentTimerId;
+            let totalElapsedTime = 0;
 
-			      		// If another timer is already running, pause it
-						const runningTimer = Object.values(timers).find(t => t && !t.paused && t.timerId !== timer?.timerId);
-						if (runningTimer) {
-							clearInterval(runningTimer.timerId);
-							runningTimer.elapsed = new Date().getTime() - runningTimer.startTime;
-							runningTimer.paused = true;
-							document.querySelector(`#timerBtn_${runningTimer.id}`).innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />  `;
-						}
+            timerButtons.forEach((button) => {
+                const taskId = button.dataset.id;
+                const timerDisplay = document.getElementById(`timer${taskId}`);
+                let timerPaused = true;
+                let elapsedTime = 0;
 
-                        // If the timer doesn't exist or is paused, start it
-						if (!timer || timer.paused) {
+                // Check if the timer display already has a value
+                const initialElapsedTime = timerDisplay.textContent.trim();
+                if (initialElapsedTime) {
+                    elapsedTime = new Date(`1970-01-01T${initialElapsedTime}Z`).getTime();
+                    timerDisplay.textContent = initialElapsedTime;
+                }
 
-			        		// Get previous time in milliseconds and add it to the start time
-    		                const previousTime = button.closest('li').querySelector('#timer' + id)?.textContent.trim();
-    		                const previousTimeInMs = previousTime ? previousTime.split(':').reduce((acc, time) => (60 * acc) + +time, 0) * 1000 : 0;
-    		                const start = timer && timer.elapsed ? new Date().getTime() - timer.elapsed : new Date().getTime() - previousTimeInMs;
-    		                
-                            // Create a new timer object
-							timers[id] = {
-								id: id,
-								startTime: start,
-								timerId: setInterval(function() {
+                button.addEventListener('click', () => {
+                    // If a timer is already running, stop it first
+                    if (currentTimerId !== taskId) {
+                        stopCurrentTimer();
+                    }
 
-                                    // Calculate elapsed time
-									const now = new Date().getTime();
-									const distance = now - start;
-									const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-									const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-									const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-									const timerEl = document.querySelector(`#timer${id}`);
+                    if (timerPaused) {
+                        timerPaused = false;
+                        if (!currentTimer) {
+                            currentTimer = new TaskTimer(1000);
+                            // Update total elapsed time in tick handler
+                            currentTimer.on('tick', () => {
+                                elapsedTime += currentTimer.interval;
+                                timerDisplay.textContent = formatTime(elapsedTime);
 
-									timerEl.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-			            			// Update elapsed time
-									elapsedTimes[id] = distance;
-
-                                    // Call AJAX function to store time log
-                                    storeTimeLog(id, elapsedTimes[id]);
-
-                                    // Calculate total elapsed time and update display
-									const totalElapsed = Object.values(elapsedTimes).reduce((acc, val) => acc + val, 0);
-
-                                    console.log(elapsedTimes);
-									const totalElapsedEl = document.querySelector('#totalWorkedToday');
-                                    totalElapsedEl.innerHTML = elapsedTimes;
-									totalElapsedEl.innerHTML = `${Math.floor(totalElapsed / (1000 * 60 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')}:${Math.floor((totalElapsed % (1000 * 60)) / 1000).toString().padStart(2, '0')}`;
-
-								}, 1000),
-								paused: false,
-								elapsed: timer ? timer.elapsed : 0
-							};
-
-                            // Change button icon to "pause"
-							button.innerHTML = `<x-heroicon-o-pause class="h-7 w-7 dark:text-white" />`;
-
-						} else {
-
-			        		// Pause the timer
-							clearInterval(timer.timerId);
-							timer.elapsed = new Date().getTime() - timer.startTime;
-							timer.paused = true;
-							button.innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />`;
-
-			        		// Update elapsed time
-							elapsedTimes[id] = timer.elapsed;
-							const totalElapsed = Object.values(elapsedTimes).reduce((acc, val) => acc + val, 0);
-
-                            storeTimeLog(id, timer.elapsed);
-						}
-
-                        function storeTimeLog(taskId, elapsed) {
-                            // Make an AJAX call to save the data
-                            $.ajax({
-                                url: "{{ route('task_time_log.store') }}",
-                                method: "POST",
-                                data: {
-                                    task_id: taskId,
-                                    user_id: "{{ Auth::id() }}",
-                                    prev_time_today: elapsed,
-                                    time_log: elapsed,
-                                    _token: "{{ csrf_token() }}"
-                                }
-                            }).fail(function(jqXHR, textStatus, errorThrown) {
-                                console.log(textStatus, errorThrown); // Handle any errors
+                                // Update total elapsed time
+                                totalElapsedTime += currentTimer.interval;
+                                document.getElementById('totalWorkedToday').textContent = formatTime(totalElapsedTime);
                             });
-                        } // end storeTimeLog  
 
-					}); 
-				});
-                //end
-			});
-			// end
+                            // Check if the totalWorkedToday element already has a value
+                            const totalWorkedTodayElement = document.getElementById('totalWorkedToday');
+                            const initialTotalElapsedTime = totalWorkedTodayElement.textContent.trim();
+                            if (initialTotalElapsedTime) {
+                                totalElapsedTime = new Date(`1970-01-01T${initialTotalElapsedTime}Z`).getTime();
+                                totalWorkedTodayElement.textContent = initialTotalElapsedTime;
+                            }
+                        }
+                        currentTimer.start();
+                        button.innerHTML = `<x-heroicon-o-pause class="h-7 w-7 dark:text-white" />`;
+
+                        // Set the current running timer
+                        currentTimerId = taskId;
+                    } else {
+                        timerPaused = true;
+                        currentTimer.stop();
+                        button.innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />`;
+                        saveElapsedTimeToServer(taskId, elapsedTime);
+                    }
+                });
+            });
+
+            function stopCurrentTimer() {
+                if (currentTimer) {
+                    currentTimer.stop();
+                    const currentTimerButton = document.getElementById(`timerBtn_${currentTimerId}`);
+                    currentTimerButton.innerHTML = `<x-heroicon-o-play class="h-7 w-7 dark:text-white" />`;
+                    currentTimer = null;
+                }
+            }
+
+            function saveElapsedTimeToServer(taskId, elapsedTime) {
+                // Make an AJAX call to save the data
+                $.ajax({
+                    url: "{{ route('task_time_log.store') }}",
+                    method: "POST",
+                    data: {
+                        task_id: taskId,
+                        user_id: "{{ Auth::id() }}",
+                        prev_time_today: elapsedTime,
+                        time_log: elapsedTime,
+                        _token: "{{ csrf_token() }}"
+                    }
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown); // Handle any errors
+                });
+            }
+            // end timer logic
         });
     </script>
 </x-filament::page>
