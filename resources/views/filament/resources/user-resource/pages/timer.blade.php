@@ -151,6 +151,7 @@
                     // If a timer is already running, stop it first
                     if (currentTimerId !== taskId) {
                         stopCurrentTimer();
+                        saveElapsedTimeToServer(taskId, elapsedTime);
                     }
 
                     if (timerPaused) {
