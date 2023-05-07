@@ -28,7 +28,7 @@
     <div class="absolute z-10 right-0 mt-2 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5" x-show="open" @click.away="open = false">
         <div class="py-2 px-2">
             <label class="px-3 block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Set tags</label>
-            <select id="task_tags" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" style="width: 15rem;">
+            <select id="task_tags" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 @foreach ($statuses as $value => $text)
                     <option value="{{ $value }}" @if($value == $tag) selected @endif>{{ $text }}</option>
                 @endforeach
