@@ -1,4 +1,4 @@
-<div class="relative" x-data="{ open: false }">
+<div class="relative" x-task="{ open: false }">
     <button @click="open = !open" class="text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
         <x-tabler-calendar-event class="h-4 w-4 text-gray-800 dark:text-black" />
     </button>
@@ -35,8 +35,8 @@
         }
     });
 
-    let start_date = "{{ $data->attribute()->pluck('start_date')->first() }}";
-    let due_date = "{{ $data->attribute()->pluck('due_date')->first() }}";
+    let start_date = "{{ $task->attribute()->pluck('start_date')->first() }}";
+    let due_date = "{{ $task->attribute()->pluck('due_date')->first() }}";
     rangePicker.setDateRange(start_date, due_date);
     //end Daterange
 </script>

@@ -1,5 +1,5 @@
 @php
-    $flag = $data->attribute()->pluck('flag')->first();
+    $flag = $task->attribute()->pluck('flag')->first();
     $bgClass = '';
     $textClass = '';
     switch ($flag) {

@@ -30,13 +30,13 @@
     </style>
 
     <div class="bg-white shadow-lg rounded-lg px-6 py-4 dark:bg-gray-800">
-        <h2 class="text-2xl font-bold mb-2 dark:text-white">{{ $data['title'] }}</h2>
-        <p class="text-gray-700 mb-4 dark:text-gray-300">{{ $data['description'] }}</p>
+        <h2 class="text-2xl font-bold mb-2 dark:text-white">{{ $task['title'] }}</h2>
+        <p class="text-gray-700 mb-4 dark:text-gray-300">{{ $task['description'] }}</p>
 
         <div class="border-t border-gray-300 mt-4"></div>
         <div class="flex flex-wrap mt-4">
             <span class="font-semibold mr-3 italic text-sm">{{ __('Assigned to') }}: </span>
-            @foreach($data['users'] as $user)
+            @foreach($task['users'] as $user)
                 <span class="inline-block rounded-full p-2 text-sm font-semibold text-black-500 mr-2 mb-4 bg-gray-200 dark:bg-gray-700">
                     <div class="flex items-center">
                         <x-filament::user-avatar :user="$user" class="text-black-500 mr-1 w-5 h-5"/>

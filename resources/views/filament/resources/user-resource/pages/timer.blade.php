@@ -150,14 +150,29 @@
                 button.addEventListener('click', () => {
                     // If a timer is already running, stop it first
                     if (currentTimerId !== taskId) {
-                        stopCurrentTimer();
-                        saveElapsedTimeToServer(taskId, elapsedTime);
+                        stopCurrentTimer();                        
                     }
 
                     if (timerPaused) {
                         timerPaused = false;
                         if (!currentTimer) {
                             currentTimer = new TaskTimer(1000);
+
+                            // Define the debounced function
+                            function debounce(func, delay) {
+                                // Save elapsed time with a delay to prevent too many requests
+                                let timeoutId;
+                                return function() {
+                                    const context = this;
+                                    const args = arguments;
+                                    clearTimeout(timeoutId);
+                                    timeoutId = setTimeout(() => func.apply(context, args), delay);
+                                };
+                            }
+
+                            // Create a debounced version of the saveElapsedTimeToServer function
+                            const debouncedSaveElapsedTime = debounce(saveElapsedTimeToServer, 1000);
+
                             // Update total elapsed time in tick handler
                             currentTimer.on('tick', () => {
                                 elapsedTime += currentTimer.interval;
@@ -166,6 +181,9 @@
                                 // Update total elapsed time
                                 totalElapsedTime += currentTimer.interval;
                                 document.getElementById('totalWorkedToday').textContent = formatTime(totalElapsedTime);
+
+                                // Save current time with delayed so it wont triggere so much request
+                                debouncedSaveElapsedTime(taskId, elapsedTime);
                             });
 
                             // Check if the totalWorkedToday element already has a value

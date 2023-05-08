@@ -1,4 +1,4 @@
-<div x-data="{ open: false, value: {{ $data->attribute()->pluck('progress')->first() ?? 0 }} }">
+<div x-data="{ open: false, value: {{ $task->attribute()->pluck('progress')->first() ?? 0 }} }">
     <div class="relative">
         <button @click="open = !open" class="text-sm font-semibold text-gray-800 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
             <span x-text="value + '%'"></span>  

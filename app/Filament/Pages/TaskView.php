@@ -15,8 +15,6 @@ use App\Models\Task;
 
 class TaskView extends Page
 {
-    public $task_id;
-    public $data;
     public $comments;
     public bool $showComments = true;
     public int $progressValue = 0;
@@ -37,13 +35,11 @@ class TaskView extends Page
 
         // Pass the $task data to the view        
         $this->task = $task;
-        $this->task_id = $id;
-        $this->data = $task;
         $this->tag = $task->attribute()->pluck('tag')->first() ?? '';
         $this->form->fill();
 
         // Fetch the comments for this task
-        $this->comments = Comment::where('task_id', $id)->with('user')->get();
+        $this->comments = Comment::where('task_id', $this->task->id)->with('user')->get();
     }
      
     protected function getFormSchema(): array
@@ -65,7 +61,7 @@ class TaskView extends Page
 
     public function refreshComments()
     {
-        $id = $this->data->id;
+        $id = $this->task->id;
         $this->comments = Comment::where('task_id', $id)->with('user')->get();
     }
 
