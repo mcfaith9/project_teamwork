@@ -3471,9 +3471,6 @@ html {
 .col-span-full{
   grid-column: 1 / -1;
 }
-.float-right{
-  float: right;
-}
 .\!m-0{
   margin: 0px !important;
 }
@@ -7004,11 +7001,6 @@ html {
 
   .lg\:pl-\[var\(--sidebar-width\)\]{
     padding-left: var(--sidebar-width);
-  }
-
-  .lg\:text-2xl{
-    font-size: 1.5rem;
-    line-height: 2rem;
   }
 
   .lg\:transition{

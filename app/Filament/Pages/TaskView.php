@@ -20,7 +20,6 @@ class TaskView extends Page
     public int $progressValue = 0;
     public string $estimateTime;
     public string $tag;
-    public $start, $end;
 
     protected static string $view = 'filament.pages.task-view';
 
@@ -30,12 +29,9 @@ class TaskView extends Page
     }     
 
     public function mount($id) {        
-        // Use the $id parameter to fetch the task data
-        $task = Task::with('users','subtasks')->find($id);
-
         // Pass the $task data to the view        
-        $this->task = $task;
-        $this->tag = $task->attribute()->pluck('tag')->first() ?? '';
+        $this->task = Task::with('users','subtasks')->find($id);
+        $this->tag = $this->task->attribute()->pluck('tag')->first() ?? '';
         $this->form->fill();
 
         // Fetch the comments for this task
@@ -95,19 +91,21 @@ class TaskView extends Page
         $taskAttributeData = [
             'flag' => $value,
         ];
-
-        $this->notify('success', 'Flag set to '. $value);
+        
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+        $this->notify('success', 'Flag set to '. $value);
+        $this->redirect(route('tasks.show', $this->task->id));
     }
 
     public function selectedProgressValue()
     {
         $taskAttributeData = [
             'progress' => $this->progressValue,
-        ];        
+        ];  
 
-        $this->notify('success', 'Progress set to '.$this->progressValue.'%');
-        $this->task->attribute()->updateOrCreate([], $taskAttributeData);        
+        $this->task->attribute()->updateOrCreate([], $taskAttributeData);    
+        $this->notify('success', 'Progress set to '.$this->progressValue.'%');  
+        $this->redirect(route('tasks.show', $this->task->id));  
     }    
 
     public function selectedReminder($text, $date_value)
@@ -115,19 +113,20 @@ class TaskView extends Page
         $taskAttributeData = [
             'reminder' => $date_value,
         ];
-
-        $this->notify('success', 'Reminder set to '.$text);
+        
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+        $this->notify('success', 'Reminder set to '.$text);
+        $this->redirect(route('tasks.show', $this->task->id));
     }
 
-    public function storeEstimateTime(): void 
+    public function storeEstimateTime()
     {
         $taskAttributeData = [
             'estimate' => $this->estimateTime,
         ];
-
-        $this->notify('success', 'Estimated time '.$this->estimateTime);
+        
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+        $this->notify('success', 'Estimated time '.$this->estimateTime);
         $this->redirect(route('tasks.show', $this->task->id));
     }
 
@@ -136,21 +135,21 @@ class TaskView extends Page
         $taskAttributeData = [
             'tag' => $this->tag,
         ];
-
-        $this->notify('success', 'Tag  '.$this->tag.' Successfully attached');
+        
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
+        $this->notify('success', 'Tag  '.$this->tag.' Successfully attached');
         $this->redirect(route('tasks.show', $this->task->id));
     }
 
-    public function storeSelectedDateRange()
+    public function storeSelectedDateRange(string $start, string $end)
     {
         $taskAttributeData = [
-            'start_date' => $this->start,
-            'due_date' => $this->end,
+            'start_date' => $start,
+            'due_date' => $end,
         ];        
-
-        $this->notify('success', 'Start Date and Due Date save successfully');
+        
         $this->task->attribute()->updateOrCreate([], $taskAttributeData); 
+        $this->notify('success', 'Start Date and Due Date save successfully');
         $this->redirect(route('tasks.show', $this->task->id));
     }
 }

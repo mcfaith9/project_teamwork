@@ -1,4 +1,4 @@
-<div class="relative" x-task="{ open: false }">
+<div class="relative" x-data="{ open: false }">
     <button @click="open = !open" class="text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
         <x-tabler-calendar-event class="h-4 w-4 text-gray-800 dark:text-black" />
     </button>
@@ -14,8 +14,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
 <script>
     //start Daterange
-    const rangePicker = new easepick.create({
-        element: document.getElementById('datepicker{{ $this->id }}'),
+    const attr = {
+        element: document.getElementById(`datepicker${@json($this->id)}`),
         css: [
             'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
         ],
@@ -26,17 +26,17 @@
         setup(rangePicker) {
             rangePicker.on('select', (e) => {
                 let start = e.detail.start;
-                let end = e.detail.end;
-
-                @this.set('start', e.detail.start.format('YYYY-MM-DD'));
-                @this.set('end', e.detail.end.format('YYYY-MM-DD'));
-                @this.call('storeSelectedDateRange');
+                let end = e.detail.end;                            
+                @this.call('storeSelectedDateRange', start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
             });
         }
-    });
+    };
+
+    const rangePicker = new easepick.create(attr);
 
     let start_date = "{{ $task->attribute()->pluck('start_date')->first() }}";
     let due_date = "{{ $task->attribute()->pluck('due_date')->first() }}";
     rangePicker.setDateRange(start_date, due_date);
     //end Daterange
 </script>
+
