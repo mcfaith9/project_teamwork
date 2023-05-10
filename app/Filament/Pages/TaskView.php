@@ -18,8 +18,6 @@ class TaskView extends Page
     public $comments;
     public bool $showComments = true;
     public int $progressValue = 0;
-    public string $estimateTime;
-    public string $tag;
 
     protected static string $view = 'filament.pages.task-view';
 
@@ -94,7 +92,6 @@ class TaskView extends Page
         
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
         $this->notify('success', 'Flag set to '. $value);
-        $this->redirect(route('tasks.show', $this->task->id));
     }
 
     public function selectedProgressValue()
@@ -119,26 +116,24 @@ class TaskView extends Page
         $this->redirect(route('tasks.show', $this->task->id));
     }
 
-    public function storeEstimateTime()
+    public function storeEstimateTime(string $estimateTime)
     {
         $taskAttributeData = [
-            'estimate' => $this->estimateTime,
+            'estimate' => $estimateTime,
         ];
         
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
-        $this->notify('success', 'Estimated time '.$this->estimateTime);
-        $this->redirect(route('tasks.show', $this->task->id));
+        $this->notify('success', 'Estimated time '.$estimateTime);
     }
 
-    public function attachSelectedTag()
+    public function attachSelectedTag(string $tag)
     {
         $taskAttributeData = [
-            'tag' => $this->tag,
+            'tag' => $tag,
         ];
         
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
-        $this->notify('success', 'Tag  '.$this->tag.' Successfully attached');
-        $this->redirect(route('tasks.show', $this->task->id));
+        $this->notify('success', 'Tag  '.$tag.' Successfully attached');
     }
 
     public function storeSelectedDateRange(string $start, string $end)
@@ -150,6 +145,5 @@ class TaskView extends Page
         
         $this->task->attribute()->updateOrCreate([], $taskAttributeData); 
         $this->notify('success', 'Start Date and Due Date save successfully');
-        $this->redirect(route('tasks.show', $this->task->id));
     }
 }

@@ -20,7 +20,7 @@
     ];
 @endphp
 
-<div x-data="{ open: false }" class="relative">
+<div wire:ignore x-data="{ open: false }" class="relative">
     <button class="flex items-center text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 justify-center" @click="open = !open">
         <x-tabler-tag class="h-4 w-4 text-gray-800 dark:text-black" />     
     </button>
@@ -82,8 +82,7 @@
         templateSelection: formatState,
         destroy: false,
     }).on('change', function (e) {
-        @this.set('tag', $(this).val());
-        @this.call('attachSelectedTag');
+        @this.call('attachSelectedTag', $(this).val());
     });
 
     // Add @click.stop modifier to prevent event from bubbling up to button

@@ -1,4 +1,4 @@
-<div class="relative" x-data="{ open: false }">
+<div wire:ignore class="relative" x-data="{ open: false }">
     <button @click="open = !open" class="text-gray-500 hover:text-gray-900 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
         <x-tabler-calendar-event class="h-4 w-4 text-gray-800 dark:text-black" />
     </button>
