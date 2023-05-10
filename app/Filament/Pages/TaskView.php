@@ -102,7 +102,6 @@ class TaskView extends Page
 
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);    
         $this->notify('success', 'Progress set to '.$this->progressValue.'%');  
-        $this->redirect(route('tasks.show', $this->task->id));  
     }    
 
     public function selectedReminder($text, $date_value)
@@ -113,7 +112,6 @@ class TaskView extends Page
         
         $this->task->attribute()->updateOrCreate([], $taskAttributeData);
         $this->notify('success', 'Reminder set to '.$text);
-        $this->redirect(route('tasks.show', $this->task->id));
     }
 
     public function storeEstimateTime(string $estimateTime)
