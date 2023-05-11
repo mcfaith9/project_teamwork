@@ -21,11 +21,15 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\Layout\Grid;
+use Filament\Tables\Columns\Layout\Panel;
+use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Awcodes\FilamentBadgeableColumn\Components\BadgeableTagsColumn;
+use Illuminate\Support\HtmlString;
 
 class TaskResource extends Resource
 {
@@ -73,25 +77,62 @@ class TaskResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')
-                    ->description(fn (Task $record): string => $record->description)
-                    ->wrap()
-                    ->searchable()
-                    ->sortable(),
-                BadgeableTagsColumn::make('users.name')
-                    ->colors([
-                        '#4caf50'
-                    ])
-                    ->searchable()
-                    ->label('Assigned To'),
-                BadgeColumn::make('creator.name')
-                    ->colors([
-                        'danger',
-                    ])
-                    ->label('Created By')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('due_date')->label('Due Date')->dateTime('j F Y')->searchable()->sortable(),
+                Grid::make([
+                    'lg' => 2,
+                    '2xl' => 5,
+                    'sm' => 12
+                ])->schema([ 
+                    Split::make([                        
+                        TextColumn::make('title')
+                            ->description(fn (Task $record): string => $record->description)
+                            ->wrap()
+                            ->searchable()
+                            ->sortable(),                           
+                    ])->columnSpan([
+                        'lg' => 'full',
+                        '2xl' => 2,
+                    ]), 
+                                 
+                    BadgeableTagsColumn::make('users.name')
+                        ->label('Assigned to')
+                        ->colors([
+                            '#4caf50'
+                        ])
+                        ->searchable(),
+                    // TextColumn::make('creator.name')
+                    //     ->label('Created By')
+                    //     ->searchable()
+                    //     ->sortable(),
+                    TextColumn::make('attribute.tag')
+                        ->default('-')
+                        ->wrap()
+                        ->sortable()
+                        ->description(function (Task $record) {
+                            $progress = $record->attribute ? $record->attribute->progress.'%' : '0%';
+                            $html = <<<HTML
+                                        <div class="mb-6 h-2 bg-gray-300 dark:bg-gray-600 rounded w-24">
+                                            <div class="h-full bg-success-500 rounded" style="width: $progress;"></div>
+                                        </div>
+                                    HTML;
+                            return new HtmlString('Progress '.$html);
+                        }),
+                    TextColumn::make('created_at')
+                        ->dateTime('M j, Y')
+                        ->searchable()
+                        ->sortable()
+                        ->description( function (Task $record) {
+                            return 'Created by '.$record->creator->name;
+                        }),                                              
+                ]), 
+                Panel::make([
+                    TextColumn::make('subtasks.title')
+                        ->description(function (Task $record): string {
+                            $subtaskDescriptions = $record->subtasks->pluck('description')->filter();
+                            return implode(', ', $subtaskDescriptions->all());
+                        })
+                        ->wrap(),
+                ])->collapsible(),               
+                  
             ])
             ->filters([
                 Tables\Filters\Filter::make('due_date_past')
@@ -105,7 +146,7 @@ class TaskResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->where('due_date', '>', today())),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 // FilamentExportBulkAction::make('export')
