@@ -108,7 +108,7 @@ class TaskResource extends Resource
                         ->wrap()
                         ->sortable()
                         ->description(function (Task $record) {
-                            $progress = $record->attribute ? $record->attribute->progress.'%' : '0%';
+                            $progress = $record->attribute && $record->attribute->progress ? $record->attribute->progress.'%' : '0%';
                             $html = <<<HTML
                                         <div class="mb-6 h-2 bg-gray-300 dark:bg-gray-600 rounded w-24">
                                             <div class="h-full bg-success-500 rounded" style="width: $progress;"></div>

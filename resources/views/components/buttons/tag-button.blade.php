@@ -82,7 +82,7 @@
         templateSelection: formatState,
         destroy: false,
     }).on('change', function (e) {
-        @this.call('attachSelectedTag', $(this).val());
+        @this.call('attachSelectedTag', $(this).find('option:selected').text());
     });
 
     // Add @click.stop modifier to prevent event from bubbling up to button
